@@ -5,10 +5,10 @@
         <a href="{{ post.url | url }}">{{ post.data.title }}</a>
       </strong>
       -
-      <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate }}</time>
+      <time datetime="{{ post.date | readableDate }}">{{ post.date | readableDate }}</time>
       -
       <span>{{ post.data.description }}</span>
-        <div>{{ post.content | safe }}</div>
+        <div>{{ post.data.synopsis | safe }}</div>
     </li>
   {% endfor %}
 </ul>

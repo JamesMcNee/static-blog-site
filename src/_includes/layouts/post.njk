@@ -1,6 +1,9 @@
 ---
 layout: layouts/base.njk
 ---
-
-<time>{{ date | readableDate }}</time>
+<div class="flex">
+    <span class="flex-1"></span>
+    <time>{{ date | readableDate }}</time>
+</div>
+<h1 class="text-3xl text-center mb-8">{{title}}</h1>
 <article>{{ content | safe }}</article>

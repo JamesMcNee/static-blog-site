@@ -1,8 +1,17 @@
 ---
 layout: layouts/post.njk
 title: 'Gradle Plugin: Adding an external dependency'
-description: The first post on the blog
-synopsis: It's a small world, after all!
+synopsis: In this post I describe how you can manage a projects dependencies from within a Gradle plugin
+image: 
+  path: blog/posts/blog9.jpg
+  alt: Jigsaw Puzzle representing a plugin
+  caption: Photo by <a href="https://unsplash.com/@sloppyperfectionist?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hans-Peter Gauster</a> on <a href="https://unsplash.com/?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>
+labels:
+  - Gradle
+  - Java
+  - Plugin
+  - Dependency
+  - How to
 date: 2022-01-01
 ---
 
@@ -26,7 +35,6 @@ Let's just start by defining some terms that will be used that may not be obviou
 Diving into the code, let's imagine that we have a brand new plugin (this post will not cover how to create this, but official documentation can be found [here](https://docs.gradle.org/current/userguide/custom_plugins.html)). Out main plugin class looks like this:
 
 ```java
-#CONFIG: { "title": "MyAwesomePlugin.java", "simpleCodeBlock": false }
 public class MyAwesomePlugin implements Plugin<Project> {
 
     @Override
@@ -43,7 +51,6 @@ Adding an external dependency is in theory not actually that much of an issue, w
 It is also possible that you pass in an object that implements one of the `Dependency` interfaces that the Gradle API provides. I would recommend against this though as there are no default implementations provided and you would therefore need to implement it yourself. This may not be such an issue but there are some methods on the interface that may require somewhat complicated logic to satisfy.
 
 ```java
-#CONFIG: { "title": "MyAwesomePlugin.java", "simpleCodeBlock": false }
 public class MyAwesomePlugin implements Plugin<Project> {
 
     @Override

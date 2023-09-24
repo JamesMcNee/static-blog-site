@@ -1,4 +1,5 @@
 const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
+const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
 
 const {
     DateTime
@@ -42,7 +43,7 @@ const codeBlockFilter = (content) => {
     const codeBlockBottom = `<div style="width: 100%; height: 7px; background-color: #282c34; border-radius: 0 0 10px 10px"></div>`
 
 
-    return content.replaceAll(new RegExp('<pre><code.*>(.*\n)+?<\/code><\/pre>', 'g'), (block) => {
+    return content.replaceAll(new RegExp('<pre.*?><code.*?>(.|\n)+?<\/code><\/pre>', 'g'), (block) => {
         const codeBlockConfig = extractCodeBlockConfig(block)
 
         if (codeBlockConfig.simpleCodeBlock) {
@@ -60,7 +61,9 @@ const codeBlockFilter = (content) => {
 module.exports = function (eleventyConfig) {
 
     eleventyConfig.addPlugin(eleventyNavigationPlugin);
+    eleventyConfig.addPlugin(syntaxHighlight);
     eleventyConfig.addPassthroughCopy('src/img')
+    eleventyConfig.addPassthroughCopy('src/styles')
     eleventyConfig.addFilter("readableDate", readableDateFilter);
     eleventyConfig.addFilter("codeBlock", codeBlockFilter);
 

@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+p {
+    margin-bottom: 1rem;
+}
+
+code {
+    @apply text-pink-600
+}
+
+ul {
+    @apply list-disc list-inside ml-10
+}
+
+ul li {
+    @apply last:mb-4
+}
+
+a {
+    @apply text-gray-800 font-semibold
+}
+
+h3 {
+    @apply text-2xl
+}
+
+h4 {
+    @apply text-xl
+}

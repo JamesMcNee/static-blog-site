@@ -1,0 +1,68 @@
+custom-element banner {
+    background-color: white;
+    width: calc(100% - 3em);
+    padding: 1em 1em 1em 1.5em;
+    border-left-width: 6px;
+    border-left-style: solid;
+    border-radius: 3px;
+    position: relative;
+    line-height: 1.5;
+    box-shadow: 4px 6px #bfbfbf;
+    display: inline-block;
+    width: 100%;
+    margin: 10px 0;
+}
+custom-element banner + custom-element banner {
+    margin-top: 2em;
+}
+custom-element banner:before {
+    color: white;
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    top: 1em;
+    left: -3px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+}
+custom-element banner p {
+    margin: 0 0 1em;
+}
+custom-element banner p:last-child {
+    margin-bottom: 0;
+}
+custom-element banner[type="info"] {
+    border-left-color: #2283b2;
+    background-color: #d5f1ff;
+}
+custom-element banner[type="info"]:before {
+    background-color: #2283b2;
+    content: "i";
+}
+custom-element banner[type="warning"] {
+    border-left-color: darkorange;
+    background-color: #ffeeda;
+}
+custom-element banner[type="warning"]:before {
+    background-color: darkorange;
+    content: "!";
+}
+custom-element banner[type="success"] {
+    border-left-color: darkolivegreen;
+    background-color: #f9ffee;
+}
+custom-element banner[type="success"]:before {
+    background-color: darkolivegreen;
+    content: "✔";
+}
+custom-element banner[type="error"] {
+    border-left-color: firebrick;
+    background-color: #ffe8e8;
+}
+custom-element banner[type="error"]:before {
+    background-color: firebrick;
+    content: "!!";
+}

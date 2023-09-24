@@ -1,18 +1,27 @@
-<nav class="flex items-center justify-between flex-wrap px-5 py-3 border-b">
-  <a href="/" class="font-semibold text-xl tracking-tight">My Page</a>
-
-  {% set navPages = collections.all | eleventyNavigation %}
-  <ul>
-    {% for entry in navPages %}
-      <li class="inline">
-        <a
-         href="{{ entry.url }}"
-         class="uppercase text-sm py-1 px-2 rounded mr-4 inline-block
-         {{'bg-black text-white' if entry.url in page.url
-         else 'text-gray-700 hover:text-gray-900'}}">
-         {{ entry.title }}
-       </a>
-      </li>
-    {% endfor %}
- </ul>
-</nav>
+<div class="navbar text-white bg-slate-800">
+    <div class="flex-1">
+        <a class="btn btn-ghost normal-case text-xl" href="/">James McNee</a>
+        {% set navPages = collections.all | eleventyNavigation %}
+        <ul>
+            {% for entry in navPages %}
+                <li class="inline">
+                    <a
+                            href="{{ entry.url }}"
+                            class="uppercase text-sm py-1 px-2 rounded mr-4 inline-block
+         {{'bg-slate-900 text-white' if entry.url in page.url
+                            else 'text-white-700 hover:text-gray-300'}}">
+                        {{ entry.title }}
+                    </a>
+                </li>
+            {% endfor %}
+    </div>
+    <div class="flex-none">
+        <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                <div class="w-10 rounded-full">
+                    <img src="/img/me.jpg" />
+                </div>
+            </label>
+        </div>
+    </div>
+</div>

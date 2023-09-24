@@ -11,7 +11,7 @@ code {
 }
 
 ul {
-    @apply list-disc list-inside ml-10
+    @apply list-disc ml-10
 }
 
 ul li {
@@ -20,6 +20,10 @@ ul li {
 
 a {
     @apply text-gray-800 font-semibold
+}
+
+h1 {
+    @apply text-4xl
 }
 
 h3 {

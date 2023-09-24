@@ -5,14 +5,13 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
     <link rel="stylesheet" type="text/css" href="/styles/custom-element.css"/>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="stylesheet" type="text/css" href="/styles/library/remix/remixicon.css"/>
     <link href="https://unpkg.com/prismjs@1.20.0/themes/prism-okaidia.css" rel="stylesheet">
 </head>
 <body>
 {% include "../components/navigation.njk" %}
-<main class="p-12">
-    {{ content | safe }}
-</main>
+{{ content | safe }}
 <script src="/assets/main.js"></script>
 </body>
 </html>

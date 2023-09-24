@@ -1,0 +1,159 @@
+---
+title: Blog
+layout: layouts/base.njk
+permalink: /me/
+---
+<div class="hero bg-slate-800 text-white">
+    <div class="hero-content text-center">
+        <div class="max-w-md">
+            <img class="rounded-full border-gray-500 border-4 w-56 m-auto" src="/img/me.jpg" alt="James McNee">
+            <h1 class="text-5xl font-bold">James McNee</h1>
+            <div class="flex justify-center">
+                <a href="https://www.linkedin.com/in/james-mcnee/" class="m-0.5">
+                    <img class="social-icon" width="24px" height="24px" title="LinkedIn" alt="LinkedIn Social"
+                         src="/img/social/linkedin.png"
+                         app-analytics anayticsCategory="navigation" anayticsAction="click"
+                         anayticsLabel="header-linkedin-link"/>
+                </a>
+                <a href="https://github.com/JamesMcNee" class="m-0.5">
+                    <img class="social-icon" width="24px" height="24px" title="GitHub" alt="GitHub Social"
+                         src="/img/social/github.png"
+                         app-analytics anayticsCategory="navigation" anayticsAction="click"
+                         anayticsLabel="header-github-link"/>
+                </a>
+                <a href="https://stackoverflow.com/users/3018652/james-macca" class="m-0.5">
+                    <img class="social-icon" width="24px" height="24px" title="Stack Overflow"
+                         alt="Stack Overflow Social" src="/img/social/stackoverflow.png"
+                         app-analytics anayticsCategory="navigation" anayticsAction="click"
+                         anayticsLabel="header-stack-overflow-link"/>
+                </a>
+            </div>
+            <p class="py-6">Senior Software Engineer in Manchester, England (UK)</p>
+        </div>
+    </div>
+</div>
+<div class="text-center py-6 px-12">
+    <h3>About Me</h3>
+    <p>
+        I am currently employed as a senior software engineer at Auto Trader, the UK's largest platform for vehicle
+        listings. I am currently working as part of the platform team, building the infrastructure that enables our
+        developers to build and deploy software quickly and easily, without them having to re-invent the wheel.
+    </p>
+
+    <div>
+        <h3>Projects</h3>
+        <div class="grid grid-cols-2 grid-flow-row">
+            <div class="card mr-2 bg-base-100 shadow-xl">
+                <figure style="min-height: 250px; max-height: 250px;"><img src="/img/botw_recipes.jpg"
+                                                                           alt="BOTW: Recipes"/></figure>
+                <div class="card-body">
+                    <h2 class="font-extrabold text-center">Breath of the Wild: Recipes</h2>
+                    <p>My most successful and popular side-project so far has been an app that I created to solve a
+                        problem that I found while playing a new video game. The Legend of Zelda: Breath of the Wild is
+                        another incarnation in a long running game series from Nintendo, within the game there is a rich
+                        cooking system in which players can combine ingredients to create dishes which will give them
+                        buffs and such.</p>
+
+                    <p>The issue that I saw is that there is no in game recipe book or notepad that one can jot down
+                        recipes they discover; this means that it is easy to forget which combination of ingredients
+                        does what. I therefore set out creating an Android application that with the help of the
+                        community would grow to become a lexicon for in game recipes.</p>
+
+                    <p>The application has received over 83,000 installs and holds an active user base of ~20,000.</p>
+                </div>
+                <div class="bg-gray-800 rounded-b py-2 justify-center">
+                    <i class="ri-github-fill text-gray-600 text-4xl cursor-not-allowed"></i>
+                </div>
+            </div>
+            <div class="card ml-2 bg-base-100 shadow-xl">
+                <figure style="min-height: 250px; max-height: 250px;"><img src="/img/migration-buddy.png"
+                                                                           alt="Migration Buddy"/></figure>
+                <div class="card-body">
+                    <h2 class="font-extrabold text-center">Migration Buddy: CLI</h2>
+                    <p style="margin-bottom: 0; flex-grow: 0">Application to aid in the migration of endpoints from one
+                        service / url to another. This utility
+                        will perform various comparisons to ensure parity between the two.</p>
+                    <span class="font-semibold text-left">Features include (but not limited to):</span>
+                    <ul class="text-left">
+                        <li>Provide a collection of multiple endpoints at once</li>
+                        <li>URL Templating / Substitution on both an endpoint and global level</li>
+                        <li>Reporting on JSON diff between response bodies</li>
+                        <li>Reporting on response time difference</li>
+                    </ul>
+
+                    <p style="margin-bottom: 0; flex-grow: 0">You can check out the source code and/or download the
+                        application using the links below.</p>
+                </div>
+                <div class="bg-gray-800 rounded-b py-2 justify-center">
+                    <a href="https://www.npmjs.com/package/migrationbuddy">
+                        <i class="ri-npmjs-fill text-white text-4xl"></i>
+                    </a>
+                    <a href="https://github.com/JamesMcNee/MigrationBuddy">
+                        <i class="ri-github-fill text-white text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card mt-4 mr-2 bg-base-100 shadow-xl">
+                <figure style="min-height: 250px; max-height: 250px;"><img src="/img/urban-cli.jpg"
+                                                                           alt="Urban Dictionary: CLI"/></figure>
+                <div class="card-body">
+                    <h2 class="font-extrabold text-center">Urban Dictionary: CLI</h2>
+                    <p>As a bit of fun and to explore creating a CLI tool using Spring Shell, I created this urban CLI
+                        application. It takes a word or phrase and uses the urban dictionary API to retrieve a
+                        definition.</p>
+
+                    <p>This project was useful as it has allowed me to begin to think about how having a Spring Shell
+                        based application could prove very useful; one use that I can think of for this may be adding an
+                        admin interface to a spring web app.</p>
+
+                    <p>You can check out the source code, or download the application using the links below.</p>
+                </div>
+                <div class="bg-gray-800 rounded-b py-2 justify-center">
+                    <a href="https://github.com/JamesMcNee/urban-cli/releases/latest/download/urban-cli.jar">
+                        <i class="ri-download-2-fill text-white text-4xl"></i>
+                    </a>
+                    <a href="https://github.com/JamesMcNee/urban-cli">
+                        <i class="ri-github-fill text-white text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card mt-4 ml-2 bg-base-100 shadow-xl">
+                <figure style="min-height: 250px; max-height: 250px;"><img src="/img/header-intercept.png"
+                                                                           alt="Header Intercept"/></figure>
+                <div class="card-body">
+                    <h2 class="font-extrabold text-center">Header Intercept</h2>
+                    <p style="margin-bottom: 0; flex-grow: 0">Adding / altering the headers on a request is a very
+                        useful feature for front-end development. Allowing the developer to easily add authentication or
+                        Content-Type headers. This addon aims to make it simple for these headers to be toggled off/on
+                        and managed through a UI.</p>
+
+                    <p style="margin-bottom: 0; flex-grow: 0">The source code for this is available on GitHub which you
+                        can access with the link below!</p>
+                </div>
+                <div class="bg-gray-800 text-white rounded-b py-2 justify-center">
+                    <a href="https://github.com/JamesMcNee/header-intercept">
+                        <i class="ri-github-fill text-white text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card mt-4 ml-2 bg-base-100 shadow-xl">
+                <figure style="min-height: 250px; max-height: 250px;"><img src="/img/toolbox.png" alt="Toolbox"/>
+                </figure>
+                <div class="card-body">
+                    <h2 class="font-extrabold text-center">Toolbox: CLI</h2>
+                    <p style="margin-bottom: 0; flex-grow: 0">Java based shell app that contains many useful tools for
+                        use when developing applications. Features such as base64 encoding, HTTP timing and JSON
+                        formatting.</p>
+
+                    <p style="margin-bottom: 0; flex-grow: 0">The source code for this is available on GitLab which you
+                        can access with the link below!</p>
+                </div>
+                <div class="bg-gray-800 text-white rounded-b py-2 justify-center">
+                    <a href="https://gitlab.com/JamesMcNee/toolkit">
+                        <i class="ri-gitlab-fill text-white text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

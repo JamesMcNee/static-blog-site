@@ -1,0 +1,48 @@
+---json
+{
+    "permalink": "atom.xml",
+    "eleventyExcludeFromCollections": true,
+    "metadata": {
+        "title": "James McNee - Blog",
+        "subtitle": "Random thoughts and interesting discoveries from a software engineer..",
+        "language": "en",
+        "url": "https://www.jamesmcnee.com/",
+        "author": {
+            "name": "James McNee",
+            "email": "james@jamesmcnee.co.uk"
+        }
+    }
+}
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="{{ metadata.url }}">
+    <title>{{ metadata.title }}</title>
+    <subtitle>{{ metadata.subtitle }}</subtitle>
+    <link href="{{ permalink | absoluteUrl(metadata.url) }}" rel="self"/>
+    <link href="{{ metadata.url }}"/>
+    <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+    <id>{{ metadata.url }}</id>
+    <author>
+        <name>{{ metadata.author.name }}</name>
+        <email>{{ metadata.author.email }}</email>
+    </author>
+    {%- for post in collections.posts | reverse %}
+        {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
+        <entry>
+            <title>{{ post.data.title }}</title>
+            <link href="{{ absolutePostUrl }}"/>
+            <updated>{{ post.date | dateToRfc3339 }}</updated>
+            <id>{{ absolutePostUrl }}</id>
+            <content xml:lang="{{ metadata.language }}"
+                     type="html">{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</content>
+            {%- for tag in post.data.labels %}
+                <tag>{{ tag }}</tag>
+            {%- endfor %}
+            <image>
+                <link>https://www.jamesmcnee.com/img/{{ post.data.image.path }}</link>
+                <alt>{{ post.data.image.alt }}</alt>
+                <caption xml:lang="{{ metadata.language }}" type="html">{{ post.data.image.caption }}</caption>
+            </image>
+        </entry>
+    {%- endfor %}
+</feed>

@@ -1,0 +1,45 @@
+---json
+{
+    "permalink": "rss.xml",
+    "eleventyExcludeFromCollections": true,
+    "metadata": {
+        "title": "James McNee - Blog",
+        "subtitle": "Random thoughts and interesting discoveries from a software engineer..",
+        "language": "en",
+        "url": "https://www.jamesmcnee.com/",
+        "author": {
+            "name": "James McNee",
+            "email": "james@jamesmcnee.co.uk"
+        }
+    }
+}
+---
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xml:base="{{ metadata.url }}" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>{{ metadata.title }}</title>
+        <link>{{ metadata.url }}</link>
+        <atom:link href="{{ permalink | absoluteUrl(metadata.url) }}" rel="self" type="application/rss+xml" />
+        <description>{{ metadata.subtitle }}</description>
+        <language>{{ metadata.language }}</language>
+        {%- for post in collections.posts | reverse %}
+            {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
+            <item>
+                <title>{{ post.data.title }}</title>
+                <link>{{ absolutePostUrl }}</link>
+                <description>{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) }}</description>
+                <pubDate>{{ post.date | dateToRfc822 }}</pubDate>
+                <dc:creator>{{ metadata.author.name }}</dc:creator>
+                <guid>{{ absolutePostUrl }}</guid>
+                {%- for tag in post.data.labels %}
+                    <tag>{{ tag }}</tag>
+                {%- endfor %}
+                <image>
+                    <link>https://www.jamesmcnee.com/img/{{ post.data.image.path }}</link>
+                    <alt>{{ post.data.image.alt }}</alt>
+                    <caption xml:lang="{{ metadata.language }}" type="html">{{ post.data.image.caption }}</caption>
+                </image>
+            </item>
+        {%- endfor %}
+    </channel>
+</rss>

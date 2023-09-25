@@ -1,7 +1,7 @@
 <div class="lg:mx-24 xl:mx-48 p-12">
     {% for post in postslist | reverse %}
-        <div class="card card-side bg-base-100 shadow-xl my-2">
-            <figure style="min-width: 40%; max-width: 40%; width: 40%;">
+        <div class="card md:card-side bg-base-100 shadow-xl my-2">
+            <figure class="md:w-[40%] md:min-w-[40%] md:max-w-[40%]">
                 <img src="/img/{{ post.data.image.path }}" alt="{{ posts.data.image.alt }}" class="rounded-xl h-full"/>
             </figure>
             <div class="card-body">

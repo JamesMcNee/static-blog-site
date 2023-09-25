@@ -1,30 +1,28 @@
-<div class="lg:mx-24 xl:mx-48 p-12">
-    {% for post in postslist | reverse %}
-        <div class="card md:card-side bg-base-100 shadow-xl my-2">
-            <figure class="md:w-[40%] md:min-w-[40%] md:max-w-[40%]">
-                <img src="/img/{{ post.data.image.path }}" alt="{{ posts.data.image.alt }}" class="rounded-xl h-full"/>
-            </figure>
-            <div class="card-body">
-                <div class="flex">
-                    <span class="flex-1"></span>
-                    <i class="ri-calendar-event-fill mr-2"></i>
-                    <time>{{ post.date | readableDate }}</time>
-                </div>
-                <h2 class="card-title">
-                    <a href="{{ post.url | url }}">{{ post.data.title }}</a>
-                </h2>
-                <p>{{ post.data.synopsis }}</p>
-                <div class="flex flex-wrap">
-                    {% for tag in post.data.labels %}
-                        <div class="badge badge-secondary mx-0.5 my-1 p-3">{{ tag }}</div>
-                    {% endfor %}
-                </div>
-                <div class="card-actions justify-end">
-                    <a href="{{ post.url | url }}">
-                        <button class="btn btn-neutral">Read it!</button>
-                    </a>
-                </div>
+{% for post in postslist | reverse %}
+    <div class="card md:card-side bg-base-100 shadow-xl my-2">
+        <figure class="md:w-[40%] md:min-w-[40%] md:max-w-[40%]">
+            <img src="/img/{{ post.data.image.path }}" alt="{{ posts.data.image.alt }}" class="rounded-xl h-full"/>
+        </figure>
+        <div class="card-body">
+            <div class="flex">
+                <span class="flex-1"></span>
+                <i class="ri-calendar-event-fill mr-2"></i>
+                <time>{{ post.date | readableDate }}</time>
+            </div>
+            <h2 class="card-title">
+                <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+            </h2>
+            <p>{{ post.data.synopsis }}</p>
+            <div class="flex flex-wrap">
+                {% for tag in post.data.labels %}
+                    <div class="badge badge-secondary mx-0.5 my-1 p-3">{{ tag }}</div>
+                {% endfor %}
+            </div>
+            <div class="card-actions justify-end">
+                <a href="{{ post.url | url }}">
+                    <button class="btn btn-neutral">Read it!</button>
+                </a>
             </div>
         </div>
-    {% endfor %}
-</div>
+    </div>
+{% endfor %}

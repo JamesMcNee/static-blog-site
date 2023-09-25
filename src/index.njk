@@ -1,7 +1,27 @@
 ---
 title: Home
 layout: layouts/base.njk
+pagination:
+    data: collections.posts
+    size: 4
+    reverse: true
+permalink: "{% if pagination.pageNumber == 0 %}index.html{% elif pagination.pageNumber > 0 %}home/page-{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
+
 ---
 
-{% set postslist = collections.posts %}
-{% include "components/postslist.njk" %}
+{% set postslist = pagination.items %}
+<div class="lg:mx-24 xl:mx-48 p-12">
+    {% include "components/postslist.njk" %}
+    <div class="flex">
+        <div class="flex-1"></div>
+        <div class="join">
+            <a href="{{ pagination.href.previous }}">
+                <button class="join-item btn {% if not pagination.href.previous %}btn-disabled{% endif %}">«</button>
+            </a>
+            <button class="join-item btn">{{ pagination.pageNumber + 1 }}</button>
+            <a href="{{ pagination.href.next }}">
+                <button class="join-item btn {% if not pagination.href.next %}btn-disabled{% endif %}">»</button>
+            </a>
+        </div>
+    </div>
+</div>

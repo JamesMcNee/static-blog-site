@@ -14,6 +14,11 @@ permalink: "{% if pagination.pageNumber == 0 %}index.html{% elif pagination.page
     {% include "components/postslist.njk" %}
     <div class="flex">
         <div class="flex-1"></div>
+        <a href="/rss.xml" class="contents">
+            <div class="relative mt-auto mb-auto mr-2 w-1 h-1 bg-orange-500 rounded-full flex justify-center items-center text-center p-4 shadow-xl">
+                <i class="ri-rss-fill text-white"></i>
+            </div>
+        </a>
         <div class="join">
             <a href="{{ pagination.href.previous }}">
                 <button class="join-item btn {% if not pagination.href.previous %}btn-disabled{% endif %}">«</button>

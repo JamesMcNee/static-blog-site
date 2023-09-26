@@ -3,16 +3,19 @@
         <a class="btn btn-ghost normal-case text-xl" href="/">James McNee</a>
         <div class="flex">
             <a href="https://www.linkedin.com/in/james-mcnee/" class="m-0.5">
-                <img class="social-icon" width="24px" height="24px" title="LinkedIn" alt="LinkedIn Social" src="/img/social/linkedin.png"
-                     app-analytics anayticsCategory="navigation" anayticsAction="click" anayticsLabel="header-linkedin-link" />
+                <div class="relative w-1 h-1 bg-sky-600 rounded-full flex justify-center items-center text-center p-3 shadow-xl">
+                    <i class="ri-linkedin-fill text-white"></i>
+                </div>
             </a>
             <a href="https://github.com/JamesMcNee" class="m-0.5">
-                <img class="social-icon" width="24px" height="24px" title="GitHub" alt="GitHub Social" src="/img/social/github.png"
-                     app-analytics anayticsCategory="navigation" anayticsAction="click" anayticsLabel="header-github-link" />
+                <div class="relative w-1 h-1 bg-black rounded-full flex justify-center items-center text-center p-3 shadow-xl">
+                    <i class="ri-github-fill text-white"></i>
+                </div>
             </a>
             <a href="https://stackoverflow.com/users/3018652/james-macca" class="m-0.5">
-                <img class="social-icon" width="24px" height="24px" title="Stack Overflow" alt="Stack Overflow Social" src="/img/social/stackoverflow.png"
-                     app-analytics anayticsCategory="navigation" anayticsAction="click" anayticsLabel="header-stack-overflow-link" />
+                <div class="relative w-1 h-1 bg-orange-400 rounded-full flex justify-center items-center text-center p-3 shadow-xl">
+                    <i class="ri-stack-overflow-line text-white"></i>
+                </div>
             </a>
         </div>
         {% set navPages = collections.all | eleventyNavigation %}

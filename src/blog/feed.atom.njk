@@ -39,7 +39,7 @@
                 <tag>{{ tag }}</tag>
             {%- endfor %}
             <image>
-                <link>https://www.jamesmcnee.com/img/{{ post.data.image.path }}</link>
+                <link>"{{ ('img/' + post.data.image.path) | absoluteUrl(metadata.url) }}"</link>
                 <alt>{{ post.data.image.alt }}</alt>
                 <caption xml:lang="{{ metadata.language }}" type="html">{{ post.data.image.caption }}</caption>
             </image>

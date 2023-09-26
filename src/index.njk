@@ -9,7 +9,7 @@ permalink: "{% if pagination.pageNumber == 0 %}index.html{% elif pagination.page
 
 ---
 
-{% set postslist = pagination.items %}
+{% set postslist = pagination.items | reverse %}
 <div class="lg:mx-24 xl:mx-48 p-12">
     {% include "components/postslist.njk" %}
     <div class="flex">

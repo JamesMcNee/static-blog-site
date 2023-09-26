@@ -12,6 +12,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<script type="text/javascript">
+    const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+    function addOnClickOutsideListener(element, func) {
+        const outsideClickListener = event => {
+            if (!element.contains(event.target) && isVisible(element)) {
+                func(element);
+                removeClickListener();
+            }
+        }
+
+        const removeClickListener = () => {
+            element.removeAttribute('click-outside-attached')
+            document.removeEventListener('click', outsideClickListener);
+        }
+
+        if (element.getAttribute('click-outside-attached') !== 'true') {
+            element.setAttribute('click-outside-attached', 'true')
+            document.addEventListener('click', outsideClickListener);
+        }
+    }
+</script>
 {% include "../components/navigation.njk" %}
 {{ content | safe }}
 <script src="/assets/main.js"></script>

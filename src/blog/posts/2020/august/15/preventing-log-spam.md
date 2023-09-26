@@ -25,7 +25,7 @@ This issue will be especially prevalent with asynchronous operations such as Kaf
 In order to mitigate this issue I have created a `CountingWindowBuffer` class which once a defined threshold is hit will act as a circuit breaker to prevent the aforementioned log spam.
 
 ```java
-private final ThresholdBuffer buffer = new CountingWinowedBuffer(5, Duration.ofMinutes(1),
+private final ThresholdBuffer buffer = new CountingWindowedBuffer(5, Duration.ofMinutes(1),
                 (count) -> LOGGER.error(String.format("Something catastrophic has happened %d times... This is a disaster!!", count)));
                 
 public void handleSomeAsyncAction(Action a) {

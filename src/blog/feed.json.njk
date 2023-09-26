@@ -1,0 +1,47 @@
+---json
+{
+    "permalink": "feed.json",
+    "eleventyExcludeFromCollections": true,
+    "metadata": {
+        "title": "James McNee - Blog",
+        "subtitle": "Random thoughts and interesting discoveries from a software engineer..",
+        "language": "en",
+        "url": "https://www.jamesmcnee.com/",
+        "author": {
+            "name": "James McNee",
+            "email": "james@jamesmcnee.co.uk"
+        }
+    }
+}
+---
+{
+    "version": "https://jsonfeed.org/version/1.1",
+    "title": "{{ metadata.title }}",
+    "language": "{{ metadata.language }}",
+    "home_page_url": "{{ metadata.url }}",
+    "feed_url": "{{ permalink | absoluteUrl(metadata.url) }}",
+    "description": "{{ metadata.subtitle }}",
+    "author": {
+        "name": "{{ metadata.author.name }}",
+        "email": "{{ metadata.author.email }}"
+    },
+    "items": [
+        {%- for post in collections.posts | reverse %}
+        {%- set absolutePostUrl = post.url | absoluteUrl(metadata.url) %}
+        {
+            "id": "{{ absolutePostUrl }}",
+            "url": "{{ absolutePostUrl }}",
+            "title": "{{ post.data.title }}",
+            "synopsis": "{{ post.data.synopsis }}",
+            "image": {
+                "url": "{{ ('img/' + post.data.image.path) | absoluteUrl(metadata.url) }}",
+                "alt": "{{ post.data.image.alt }}",
+                "caption": {{ post.data.image.caption | htmlToAbsoluteUrls(absolutePostUrl) | dump | safe }}
+            },
+            "content_html": {% if post.templateContent %}{{ post.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | dump | safe }}{% else %}""{% endif %},
+            "date_published": "{{ post.date | dateToRfc3339 }}"
+        }
+        {% if not loop.last %},{% endif %}
+        {%- endfor %}
+    ]
+}

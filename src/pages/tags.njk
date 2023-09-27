@@ -1,0 +1,18 @@
+---
+title: Tags
+layout: layouts/base.njk
+pagination:
+    data: collections.postTags
+    size: 1
+    alias: tag
+permalink: /tags/{{ tag | slugify }}/
+---
+
+{% set postslist = collections.postTags[tag] | reverse %}
+<div class="lg:mx-24 xl:mx-48 p-6 md:p-12">
+    <div class="flex">
+        <span class="flex-1"></span>
+        <span class="badge badge-lg badge-secondary">{{ tag }}</span>
+    </div>
+    {% include "components/postslist.njk" %}
+</div>

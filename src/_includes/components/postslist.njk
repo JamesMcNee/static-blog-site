@@ -15,7 +15,9 @@
             <p>{{ post.data.synopsis }}</p>
             <div class="flex flex-wrap">
                 {% for tag in post.data.labels %}
-                    <div class="badge badge-secondary mx-0.5 my-1 p-3">{{ tag }}</div>
+                    <a href="{{ ('/tags/' + tag | lower | slugify) }}">
+                        <div class="badge badge-secondary mx-0.5 my-1 p-3">{{ tag | lower }}</div>
+                    </a>
                 {% endfor %}
             </div>
             <div class="card-actions justify-end">

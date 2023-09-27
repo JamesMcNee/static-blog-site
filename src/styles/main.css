@@ -33,3 +33,77 @@ h3 {
 h4 {
     @apply text-xl
 }
+
+/** START: Custom Element **/
+custom-element banner {
+    @apply shadow-2xl;
+
+    color: hsl(var(--pc));
+    background-color: white;
+    width: calc(100% - 3em);
+    padding: 1em 1em 1em 1.5em;
+    border-left-width: 6px;
+    border-left-style: solid;
+    border-radius: 3px;
+    position: relative;
+    line-height: 1.5;
+    display: inline-block;
+    width: 100%;
+    margin: 10px 0;
+}
+custom-element banner + custom-element banner {
+    margin-top: 2em;
+}
+custom-element banner:before {
+    color: white;
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    top: 1em;
+    left: -3px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+}
+custom-element banner p {
+    margin: 0 0 1em;
+}
+custom-element banner p:last-child {
+    margin-bottom: 0;
+}
+custom-element banner[type="info"] {
+    background-color: hsl(var(--inc));
+    border-left-color: hsl(var(--in));
+}
+custom-element banner[type="info"]:before {
+    background-color: hsl(var(--in));
+    content: "i";
+}
+custom-element banner[type="warning"] {
+    border-left-color: hsl(var(--wa));
+    background-color: hsl(var(--wac));
+}
+custom-element banner[type="warning"]:before {
+    background-color: hsl(var(--wa));
+    content: "!";
+}
+custom-element banner[type="success"] {
+    border-left-color: hsl(var(--su));
+    background-color: hsl(var(--suc));
+}
+custom-element banner[type="success"]:before {
+    background-color: hsl(var(--su));
+    content: "✔";
+}
+custom-element banner[type="error"] {
+    border-left-color: hsl(var(--er));
+    background-color: hsl(var(--erc));
+}
+custom-element banner[type="error"]:before {
+    background-color: hsl(var(--er));
+    content: "!!";
+}
+
+/** END: Custom Element **/

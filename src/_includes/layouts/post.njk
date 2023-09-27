@@ -2,12 +2,11 @@
 layout: layouts/base.njk
 ---
 <div class="lg:mx-24 xl:mx-48 p-2 md:p-12">
-    <div class="flex">
-        <span class="flex-1"></span>
-        <i class="ri-calendar-event-fill mr-2"></i>
-        <time>{{ date | readableDate }}</time>
+    <div class="text-center mb-8">
+        <h1 class="text-3xl">{{title}}</h1>
+        <time class="italic text-sm">{{ date | readableDate }}</time>
+        <div class="divider"><i class="ri-pen-nib-line"></i></div>
     </div>
-    <h1 class="text-3xl text-center mb-8">{{title}}</h1>
     {% if image.path | length %}
         <div class="mx-6 float-left w-3/12">
             <img alt="{{ image.alt }}" class="border-black border-4" width="100%" src="/img/{{ image.path }}">

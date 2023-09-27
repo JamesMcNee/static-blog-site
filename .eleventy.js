@@ -9,7 +9,7 @@ const {
 const readableDateFilter = (dateObj) => {
     return DateTime.fromJSDate(dateObj, {
         zone: 'utc'
-    }).toFormat("dd MMMM yyyy");
+    }).toFormat("dd MMM yyyy");
 }
 
 module.exports = function (eleventyConfig) {

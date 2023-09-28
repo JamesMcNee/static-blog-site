@@ -3,6 +3,12 @@
     const localStorageKey = 'selected-theme'
     const html = document.getElementsByTagName("html")[0]
 
+    function getPreferredColourScheme() {
+        const preferredTheme = getPreferredTheme()
+
+        return themes[preferredTheme]
+    }
+
     function getPreferredTheme() {
         const themeFromLs = localStorage.getItem(localStorageKey)
 
@@ -31,9 +37,11 @@
         if (isLightTheme) {
             themeSelectorIcon.className = 'ri-sun-fill'
             themeSelectorIcon.onclick = () => setTheme('dark')
+            document.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: 'dark' } }))
         } else {
             themeSelectorIcon.className = 'ri-moon-fill'
             themeSelectorIcon.onclick = () => setTheme('fantasy')
+            document.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme: 'fantasy' } }))
         }
     }
 </script>

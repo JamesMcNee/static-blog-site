@@ -18,4 +18,54 @@ layout: layouts/base.njk
         </div>
     {% endif %}
     <article>{{ content | safe }}</article>
+    <style>
+        .utterances {
+            max-width: unset;
+        }
+    </style>
+    <script type="text/javascript">
+        let utterancesReady = false
+
+        addEventListener('message', event => {
+            if (event.origin !== 'https://utteranc.es') {
+                return;
+            }
+
+            utterancesReady = true
+
+            applyUtterancesTheme()
+        });
+
+        document.addEventListener('theme-changed', () => {
+            if (utterancesReady) {
+                applyUtterancesTheme()
+            }
+        })
+
+        function applyUtterancesTheme() {
+            const preferredColourScheme = getPreferredColourScheme()
+
+            const utterancesTheme = preferredColourScheme === 'dark' ? 'dark-blue' : 'boxy-light'
+
+            const message = {
+                type: 'set-theme',
+                theme: utterancesTheme
+            };
+
+            const utterancesIframe = document.getElementsByClassName('utterances-frame')?.[0];
+            utterancesIframe.contentWindow.postMessage(message, 'https://utteranc.es');
+        }
+    </script>
+    <div id="comment-container">
+        <div class="divider"><i class="ri-pen-nib-line"></i></div>
+        <span class="text-xl">Comments</span>
+        <p>Please feel free to share your thoughts and questions about this post!</p>
+        <script src="https://utteranc.es/client.js"
+                repo="JamesMcNee/static-blog-site"
+                issue-term="pathname"
+                theme="preferred-color-scheme"
+                crossorigin="anonymous"
+                async>
+        </script>
+    </div>
 </div>

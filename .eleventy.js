@@ -12,6 +12,16 @@ const readableDateFilter = (dateObj) => {
     }).toFormat("dd MMM yyyy");
 }
 
+const readTimeFilter = (content) => {
+    const wordsPerMinute = 250;
+
+    const stripMarkup = content.replaceAll(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
+    const noOfWords = stripMarkup.split(/\s/g).length;
+    const minutes = Math.ceil(noOfWords / wordsPerMinute);
+
+    return `${minutes} Minute${minutes > 1 ? 's' : ''}`;
+}
+
 module.exports = function (eleventyConfig) {
 
     eleventyConfig.addPlugin(eleventyNavigationPlugin);
@@ -23,8 +33,9 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy('src/favicon.ico')
 
     eleventyConfig.addFilter("readableDate", readableDateFilter);
+    eleventyConfig.addFilter("readTime", readTimeFilter);
 
-    eleventyConfig.addCollection("postTags", function(collectionApi) {
+    eleventyConfig.addCollection("postTags", function (collectionApi) {
         const allPosts = collectionApi.getFilteredByTag("posts")
 
         const shash = allPosts.reduce((accumulator, current) => {

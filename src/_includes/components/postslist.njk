@@ -6,8 +6,7 @@
         <div class="card-body">
             <div class="flex">
                 <span class="flex-1"></span>
-                <i class="ri-calendar-event-fill mr-2"></i>
-                <time>{{ post.date | readableDate }}</time>
+                <span class="italic text-sm"><i class="ri-hourglass-2-fill mr-1"></i>{{ post.content | readTime }}</span>
             </div>
             <h2 class="card-title">
                 <a href="{{ post.url | url }}">{{ post.data.title }}</a>

@@ -3,8 +3,12 @@ layout: layouts/base.njk
 ---
 <div class="lg:mx-24 xl:mx-48 p-2 md:p-12">
     <div class="text-center mb-8">
-        <h1 class="text-3xl">{{title}}</h1>
-        <time class="italic text-sm">{{ date | readableDate }}</time>
+        <h1 class="text-3xl">{{ title }}</h1>
+        <div class="flex flex-row content-center italic text-sm">
+           <time class="flex-1 text-right">{{ date | readableDate }}</time>
+            <div class="divider divider-horizontal"></div>
+            <span class="flex-1 text-left"><i class="ri-hourglass-2-fill mr-1"></i>{{ content | readTime }}</span>
+        </div>
         <div class="divider"><i class="ri-pen-nib-line"></i></div>
     </div>
     {% if image.path | length %}

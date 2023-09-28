@@ -27,7 +27,7 @@ In order to have our cake and eat it too, have a detached microservice architect
 A reverse proxy in its simplest form is a service that sits in front of multiple other services in which traffic (usually from the internet) is routed via. This layer can be used to add a layer of security, load balance, cache content and/or act as a facade for a microservice architecture (which this post focuses on).
 <br />
 
-<div style="text-align: center"><img src="https://main-site-api.jamesmcnee.com/images/blog/post-content/reverse-proxy/reverse-proxy.svg" width="70%" /></div>
+<div style="text-align: center"><img src="/img/blog/posts/post-content/reverse-proxy/reverse-proxy-dark.svg" width="70%" /></div>
 Further reading around what a reverse proxy is and how it compares to a regular proxy can be found online such as 
 
 [this](https://www.cloudflare.com/en-gb/learning/cdn/glossary/reverse-proxy) article from Cloudflare.

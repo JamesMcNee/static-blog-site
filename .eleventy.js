@@ -6,6 +6,11 @@ const {
     DateTime
 } = require("luxon");
 
+// https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
+const htmlDateStringFilter = (dateObj) => {
+    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
+}
+
 const readableDateFilter = (dateObj) => {
     return DateTime.fromJSDate(dateObj, {
         zone: 'utc'
@@ -31,8 +36,10 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy('src/img')
     eleventyConfig.addPassthroughCopy('src/styles')
     eleventyConfig.addPassthroughCopy('src/favicon.ico')
+    eleventyConfig.addPassthroughCopy('src/robots.txt')
 
     eleventyConfig.addFilter("readableDate", readableDateFilter);
+    eleventyConfig.addFilter('htmlDateString', htmlDateStringFilter);
     eleventyConfig.addFilter("readTime", readTimeFilter);
 
     eleventyConfig.addCollection("postTags", function (collectionApi) {

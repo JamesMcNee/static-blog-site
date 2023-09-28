@@ -15,7 +15,11 @@ labels:
 date: 2022-01-01
 ---
 
-I recently took on a bit of a side project to create a grade plugin to consolidate some shared build time concerns across a number of projects at my workplace. While I thoroughly enjoyed writing the plugin and learned a lot about how Gradle works (I would recommend the exercise to all as a learning experience), I did hit some roadblocks along the way. One of which this post is intended to address and hopefully provide some help to others who are trying to solve the same problem.
+I recently took on a bit of a side project to create a grade plugin to consolidate some shared build time concerns across a number of projects at my workplace. 
+
+While I thoroughly enjoyed writing the plugin and learned a lot about how Gradle works (I would recommend the exercise to all as a learning experience), I did hit some roadblocks along the way. 
+
+One of these problems is the focus of this post which should hopefully provide some help to others who are trying to solve the same problem.
 
 **Problem statement:**<br/>
 I would like my plugin to add an external dependency to the project it is applied to.

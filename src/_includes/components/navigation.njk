@@ -1,7 +1,46 @@
+<script>
+    const themes = {fantasy: 'light', dark: 'dark'}
+    const localStorageKey = 'selected-theme'
+    const html = document.getElementsByTagName("html")[0]
+
+    function getPreferredTheme() {
+        const themeFromLs = localStorage.getItem(localStorageKey)
+
+        if (themeFromLs) {
+            return themeFromLs;
+        }
+
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark'
+        }
+
+        return 'fantasy'
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+        setTheme(getPreferredTheme())
+    });
+
+    function setTheme(theme) {
+        localStorage.setItem(localStorageKey, theme)
+        html.setAttribute('data-theme', theme)
+
+        const isLightTheme = themes[theme] === 'light'
+        const themeSelectorIcon = document.getElementById('theme-selector-icon')
+
+        if (isLightTheme) {
+            themeSelectorIcon.className = 'ri-sun-fill'
+            themeSelectorIcon.onclick = () => setTheme('dark')
+        } else {
+            themeSelectorIcon.className = 'ri-moon-fill'
+            themeSelectorIcon.onclick = () => setTheme('fantasy')
+        }
+    }
+</script>
 <div class="navbar text-white bg-slate-800 lg:px-32">
     <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl" href="/">James McNee</a>
-        <div class="flex">
+        <div class="flex invisible md:visible">
             <a href="https://www.linkedin.com/in/james-mcnee/" class="m-0.5">
                 <div class="relative w-1 h-1 bg-sky-600 rounded-full flex justify-center items-center text-center p-3 shadow-xl">
                     <i class="ri-linkedin-fill text-white"></i>
@@ -25,19 +64,20 @@
                     <a
                             href="{{ entry.url }}"
                             class="uppercase text-sm py-1 px-2 rounded mr-4 inline-block
-         {{'bg-slate-900 text-white' if entry.url in page.url
-                            else 'text-white hover:text-gray-300'}}">
+         {{ 'bg-slate-900 text-white' if entry.url in page.url
+                            else 'text-white hover:text-gray-300' }}">
                         {{ entry.title }}
                     </a>
                 </li>
             {% endfor %}
     </div>
+    <div class="text-2xl mr-4 cursor-pointer"><i id="theme-selector-icon" class="ri-sun-fill"></i></div>
     <div class="flex-none">
         <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                 <div class="w-10 rounded-full">
                     <a href="/me">
-                        <img src="/img/me.jpg" />
+                        <img src="/img/me.jpg"/>
                     </a>
                 </div>
             </label>

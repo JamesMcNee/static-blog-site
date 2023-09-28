@@ -32,7 +32,7 @@ Let's just start by defining some terms that will be used that may not be obviou
  </banner>
 </custom-element>
 
-Diving into the code, let's imagine that we have a brand new plugin (this post will not cover how to create this, but official documentation can be found [here](https://docs.gradle.org/current/userguide/custom_plugins.html)). Out main plugin class looks like this:
+Diving into the code, let's imagine that we have a brand new plugin (this post will not cover how to create this, but official documentation can be found [over on the Gradle docs site](https://docs.gradle.org/current/userguide/custom_plugins.html)). Out main plugin class looks like this:
 
 ```java
 public class MyAwesomePlugin implements Plugin<Project> {
@@ -45,7 +45,7 @@ public class MyAwesomePlugin implements Plugin<Project> {
 ```
 Adding an external dependency is in theory not actually that much of an issue, we can simply use the `project.getDependencies().add()` method. The main issue comes when determining what to pass into this method. Let's take a look at the signature of the method: `Dependency add(String configurationName, Object dependencyNotation)`. We know what `configurationName` is (see jargon section above), but what on earth are we supposed to pass as `dependencyNotation`?
 
-- String Notation: Simply a String written using Gradle dependency notation e.g. `com.mycompany:my-awesome-dependency:1.2.3`. There are ways to also specify things like strictness when using these 'simple' declarations, this is somewhat documented [here](https://docs.gradle.org/current/userguide/single_versions.html#simple_version_declaration_semantics).
+- String Notation: Simply a String written using Gradle dependency notation e.g. `com.mycompany:my-awesome-dependency:1.2.3`. There are also [ways to specify things like strictness](https://docs.gradle.org/current/userguide/single_versions.html#simple_version_declaration_semantics) when using these 'simple' declarations.
 - Map Notation: This is where you pass a `Map<String, String>` containing key-value pairs representing the dependency. The documentation on this is either non existent or elusive, but for example: `"group": "com.mycompany", "name": "my-awesome-dependency", "version": "1.2.3"`.
 
 It is also possible that you pass in an object that implements one of the `Dependency` interfaces that the Gradle API provides. I would recommend against this though as there are no default implementations provided and you would therefore need to implement it yourself. This may not be such an issue but there are some methods on the interface that may require somewhat complicated logic to satisfy.

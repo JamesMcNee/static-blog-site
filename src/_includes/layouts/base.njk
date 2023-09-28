@@ -5,10 +5,15 @@
     <title>{{ title }}</title>
     <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" type="text/css" href="/styles/library/remix/remixicon.css"/>
-    <link rel="stylesheet" type="text/css" href="/styles/library/prism-okaidia.css"/>
+
+    <link rel="preload" href="/styles/library/remix/remixicon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/styles/library/remix/remixicon.min.css"></noscript>
+
+    <link rel="preload" href="/styles/library/prism-okaidia.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/styles/library/prism-okaidia.css"></noscript>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% if synopsis %}{{ synopsis }}{% else %}{{ title }}{% endif %}">
 </head>
 <body>
 <script type="text/javascript">

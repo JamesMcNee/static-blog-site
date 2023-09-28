@@ -86,13 +86,22 @@ permalink: "{% if pagination.pageNumber == 0 %}index.html{% elif pagination.page
             </div>
         </a>
         <div class="join">
-            <a href="{{ pagination.href.previous }}">
-                <button class="join-item btn {% if not pagination.href.previous %}btn-disabled{% endif %}">«</button>
-            </a>
+            {% if pagination.href.previous %}
+                <a href="{{ pagination.href.previous }}">
+                    <button class="join-item btn">«</button>
+                </a>
+            {% else %}
+                <button class="join-item btn btn-disabled">«</button>
+            {% endif %}
             <button class="join-item btn">{{ pagination.pageNumber + 1 }}</button>
-            <a href="{{ pagination.href.next }}">
-                <button class="join-item btn {% if not pagination.href.next %}btn-disabled{% endif %}">»</button>
-            </a>
+            {% if pagination.href.next %}
+                <a href="{{ pagination.href.next }}">
+                    <button class="join-item btn">»</button>
+                </a>
+            {% else %}
+                <button class="join-item btn btn-disabled">»</button>
+            {% endif %}
+
         </div>
     </div>
 </div>

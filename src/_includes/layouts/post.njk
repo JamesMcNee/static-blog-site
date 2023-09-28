@@ -18,6 +18,16 @@ layout: layouts/base.njk
         </div>
     {% endif %}
     <article>{{ content | safe }}</article>
+    <div class="flex">
+        <div class="flex-1"></div>
+        <div class="flex flex-wrap flex-row">
+            {% for tag in labels %}
+                <a href="{{ ('/tags/' + tag | lower | slugify) }}">
+                    <div class="badge badge-secondary mx-0.5 my-1 p-3">{{ tag | lower }}</div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
     <style>
         .utterances {
             max-width: unset;

@@ -6,18 +6,25 @@
     <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 
-    <link rel="preload" href="/styles/library/remix/remixicon.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/styles/library/remix/remixicon.min.css"></noscript>
+    <link rel="preload" href="/styles/library/remix/remixicon.min.css" as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="/styles/library/remix/remixicon.min.css">
+    </noscript>
 
-    <link rel="preload" href="/styles/library/prism-okaidia.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="/styles/library/prism-okaidia.css"></noscript>
+    <link rel="preload" href="/styles/library/prism-okaidia.css" as="style"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="/styles/library/prism-okaidia.css">
+    </noscript>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% if synopsis %}{{ synopsis }}{% else %}{{ title }}{% endif %}">
 </head>
 <body>
 <script type="text/javascript">
-    const isVisible = elem => !!elem && !!( elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length );
+    const isVisible = elem => !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+
     function addOnClickOutsideListener(element, func) {
         const outsideClickListener = event => {
             if (!element.contains(event.target) && isVisible(element)) {
@@ -35,6 +42,16 @@
             element.setAttribute('click-outside-attached', 'true')
             document.addEventListener('click', outsideClickListener);
         }
+    }
+
+    function debounce(func, timeout = 500) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                func.apply(this, args);
+            }, timeout);
+        };
     }
 </script>
 {% include "../components/navigation.njk" %}

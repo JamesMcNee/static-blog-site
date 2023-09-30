@@ -135,25 +135,20 @@ Now that I had the markup for searching and displaying the results, I just neede
 
 ```html
 <script type="text/javascript">
-    function hideSearchResults() {
-        document.getElementById('search-results-container').classList.add('invisible')
-        document.getElementById('search-results-container').classList.remove('visible')
-    }
-
-    function showSearchResults() {
-        document.getElementById('search-results-container').classList.remove('invisible')
-        document.getElementById('search-results-container').classList.add('visible')
+    function searchShouldBeVisible(visible) {
+        document.getElementById('search-results-container').classList.remove(visible ? 'invisible' : 'visible')
+        document.getElementById('search-results-container').classList.add(visible ? 'visible' : 'invisible')
     }
 
     function search(term) {
         // Set search results to invisible if the term is falsy (empty string, or null/undefined)
         if (!term) {
-            hideSearchResults()
+            searchShouldBeVisible(false)
             return
         }
 
         // Set search results to visible
-        showSearchResults()
+        searchShouldBeVisible(true)
 
         // Fetch the full search payload
         const searchResponse = await fetch('/search.json')

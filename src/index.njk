@@ -11,27 +11,22 @@ permalink: "{% if pagination.pageNumber == 0 %}index.html{% elif pagination.page
 
 {% set postslist = pagination.items | reverse %}
 <script type="text/javascript">
-    function hideSearchResults() {
-        document.getElementById('search-results-container').classList.add('invisible')
-        document.getElementById('search-results-container').classList.remove('visible')
-    }
-
-    function showSearchResults() {
-        document.getElementById('search-results-container').classList.remove('invisible')
-        document.getElementById('search-results-container').classList.add('visible')
+    function searchShouldBeVisible(visible) {
+        document.getElementById('search-results-container').classList.remove(visible ? 'invisible' : 'visible')
+        document.getElementById('search-results-container').classList.add(visible ? 'visible' : 'invisible')
     }
 
     const search = debounce(async (term) => {
         if (!term) {
-            hideSearchResults()
+            searchShouldBeVisible(false)
             return
         }
-        addOnClickOutsideListener(document.getElementById('search-results-container'), element => {
-            element.classList.add('invisible')
-            element.classList.remove('visible')
+
+        addOnClickOutsideListener(document.getElementById('search-results-container'), _ => {
+            searchShouldBeVisible(false)
         })
 
-        showSearchResults()
+        searchShouldBeVisible(true)
 
         const feedResponse = await fetch('/feed.json')
         const feed = await feedResponse.json()

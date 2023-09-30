@@ -1,6 +1,18 @@
 ---
 layout: layouts/base.njk
 ---
+<progress id="scroll-progress" class="progress progress-secondary w-[102%] left-[-1%] fixed bg-transparent z-50 top-0" value="0" max="100"></progress>
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const scrollProgressElement = document.getElementById('scroll-progress')
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+            scrollProgressElement.value = (winScroll / height) * 100
+        });
+    });
+</script>
 <div class="lg:mx-24 xl:mx-48 p-2 md:p-12">
     <div class="text-center mb-8">
         <h1>{{ title }}</h1>

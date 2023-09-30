@@ -15,24 +15,24 @@ date: 2023-09-29
 ---
 
 #### Switching to Eleventy
-Until recently my blog at [JamesMcNee.co.uk](https://jamesmcnee.co.uk) was a single page application built using the Angular framework a few years ago. I decided to build the blog using Angular because it was, and still is, the framework that I am most familiar and comfortable with. In my day-to-day work, if I need to whip up a quick webapp for users to interact with a system that I am building, my go to will be an Angular based SPA.
+Until recently, my blog at [JamesMcNee.co.uk](https://jamesmcnee.co.uk) was a single-page application built using the Angular framework a few years ago. I decided to build the blog using Angular because it was, and still is, the framework that I am most comfortable with. In my day-to-day work, if I need to whip up a quick web app for users to interact with a system that I am building, my go-to will be an Angular-based SPA.
 
 With time, I started to call into question my decision to build a blog using the Angular framework. The site was using an old version of the framework and upgrading was taking work, it was using a bespoke custom CMS that I built, powered by a Java API and MongoDB store. It also had a lot of custom CSS, which is not my forte. I wanted something lighter, faster to load and easy to host and maintain.
 
 It was time to explore one of these new-fangled static site generators that everyone has been raving about, promising to solve all the problems I had with my current set up. After a bit of googling, I decided to try out [Eleventy](https://www.11ty.dev/), and I was immediately impressed by both the minimalism and flexibility it provides. So a few hours later, I had ported the pages and content, mainly keeping in the same style as the previous incarnation, but with the extra goodness of using [Tailwind](https://tailwindcss.com/) to do it.
 
 #### Searching for a way to search
-The benefits that a static site provides in terms of the web performance and the ease of adding new content are great, but it does pose a challenge for certain features that would be trivial with an API, in this case search... I wanted to add a search component to my blog to allow for quick finding of posts by title and synopsis keywords.
+The benefits that a static site provides in terms of web performance and the ease of adding new content are great, but it does pose a challenge for certain features that would be trivial with an API, in this case, search... I wanted to add a search component to my blog to allow for quick finding of posts by title and synopsis keywords.
 
-So, like any good developer, I immediately went to Google in hopes of finding someone who has already done the work for me! Alas, my search did not yield a good example on how to implement what I wanted.
+So, like any good developer, I immediately went to Google in hopes of finding someone who has already done the work for me! Alas, my search did not yield a good example of how to implement what I wanted.
 
 #### Building it from scratch
 After not having found a good example (there may be good examples, I just did not find one), I set in thinking about how I could implement it myself.
 
 The back of the napkin requirements were simple, the solution should:
-- Plug into Eleventys collection framework, so that I could use the same collection of blog posts for rendering and searching.
+- Plug into Eleventy's collection framework, so that I could use the same collection of blog posts for rendering and searching.
 - Have the ability to dynamically show results within a component, and not require linking off to a separate page.
-- Be totally self-contained within the repository, i.e. not using something like Google Site Search.
+- Be entirely totally self-contained within the repository, i.e. not using something like Google Site Search.
 
 ##### Creating a search payload
 The first step to implement this was to get a data source in place, a simple JSON page served on a static route should do it. Here is an example of a nunjucks template that gives the search information for each post on my blog:
@@ -185,8 +185,8 @@ Now that I had the markup for searching and displaying the results, I just neede
 ```
 
 The above is a slightly simplified version of what I ended up with as I also wanted the following features:
-- Click outside detection - When the user clicks or taps outside the search results, it should dismiss/hide them
-- Search debounce - As I will be binding to the `keyup` event, it would be inefficient to constantly request the search payload for every user keystroke. So I want to wait for the user to finish typing before running the search.
+- Click outside detection - When the user clicks or taps outside the search results, it should dismiss/hide them.
+- Search debounce - As I will be binding to the `keyup` event, to request the search payload for every user keystroke would be inefficient. Therefore, it would be beneficial to wait for the user to finish typing before running the search.
 
 You can, if desired, have a gander at the [full implementation](https://github.com/JamesMcNee/static-blog-site/blob/8d110bcdd810d507ad4d7255436e4ab3f5980c16/src/index.njk#L13-L62) of this on the GitHub repository for this blog. Do note that some of the required functions are off in other files though.
 

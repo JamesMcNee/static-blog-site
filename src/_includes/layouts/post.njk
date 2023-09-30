@@ -12,7 +12,7 @@ layout: layouts/base.njk
         <div class="divider"><i class="ri-pen-nib-line"></i></div>
     </div>
     {% if image.path | length %}
-        <div class="mx-6 float-left w-3/12">
+        <div class="md:mx-6 md:float-left md:w-3/12">
             <img alt="{{ image.alt }}" class="border-black border-4" width="100%" src="/img/{{ image.path }}">
             <p class="text-xs text-gray-500 text-center italic">{{ image.caption | safe }}</p>
         </div>

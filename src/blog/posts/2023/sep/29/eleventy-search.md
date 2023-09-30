@@ -198,8 +198,9 @@ All that is left now is to wire up the search input to the function we have crea
        onkeyup="search(event.target.value)" />
 ```
 
-<div class="mx-6 w-2/5 mx-auto">
-  <img alt="Image showing a search box with some dummy results under it" class="mx-auto" width="100%" src="/img/blog/posts/post-content/eleventy-search/search-component-finished.png">
+<div class="mx-6 w-4/5 md:w-3/5 mx-auto">
+  <img alt="Image showing a search box with some dummy results under it" class="mx-auto dark:hidden" width="100%" src="/img/blog/posts/post-content/eleventy-search/search-component-finished.png">
+  <img alt="Image showing a search box with some dummy results under it" class="mx-auto hidden dark:block" width="100%" src="/img/blog/posts/post-content/eleventy-search/search-component-finished-dark.png">
 </div>
 
 #### Summary

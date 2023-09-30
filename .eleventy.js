@@ -47,7 +47,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addCollection("postTags", function (collectionApi) {
         const allPosts = collectionApi.getFilteredByTag("posts")
 
-        const shash = allPosts.reduce((accumulator, current) => {
+        return allPosts.reduce((accumulator, current) => {
             const currentPostsTags = current.data.labels.map(label => label.toLowerCase())
 
             for (const tag of currentPostsTags) {
@@ -57,10 +57,18 @@ module.exports = function (eleventyConfig) {
 
             return accumulator
         }, {})
+    });
 
-        // console.log(shash)
 
-        return shash
+    eleventyConfig.amendLibrary("md", mdLib => {
+        const anchor = require('markdown-it-anchor')
+        mdLib.use(anchor, {
+            permalink: anchor.permalink.linkInsideHeader({
+                symbol: `<span aria-hidden="true" class="text-sm"><i class="ri-hashtag"></i></span>`,
+                placement: 'before'
+            })
+        })
+
     });
 
     return {

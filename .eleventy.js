@@ -20,7 +20,9 @@ const readableDateFilter = (dateObj) => {
 const readTimeFilter = (content) => {
     const wordsPerMinute = 250;
 
-    const stripMarkup = content.replaceAll(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
+    const stripLinebreaks = content.replaceAll('\n', '')
+    const stripFullCodeBlocks = stripLinebreaks.replaceAll(/(<pre(.+?)>([^<]+)?<\/pre>)/g, '')
+    const stripMarkup = stripFullCodeBlocks.replaceAll(/<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g, '')
     const noOfWords = stripMarkup.split(/\s/g).length;
     const minutes = Math.ceil(noOfWords / wordsPerMinute);
 

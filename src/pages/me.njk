@@ -41,6 +41,32 @@ permalink: /me/
         <h3>Projects</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-2 grid-flow-row">
             <div class="card bg-base-100 shadow-xl">
+                <figure style="min-height: 250px; max-height: 250px;"><img src="/img/persevere-js.png"
+                                                                           alt="BOTW: Recipes"/></figure>
+                <div class="card-body">
+                    <h2 class="font-extrabold text-center">PersevereJS</h2>
+                    <p>Writing tests for interactions with asynchronous systems (e.g. Kafka, RabbitMQ) is hard, of course at
+                        some level you can and should just mock your interaction, but for a more integration level test,
+                        it's important to use the 'real' system.</p>
+
+                    <p>The main thing that makes testing these systems hard, is the unpredictability of when they will respond,
+                        and therefore when you can assert your condition.</p>
+
+                    <p>Inspired by a Java library called <a href="http://www.awaitility.org">Awaitility</a>, I wanted to bring
+                        some of the concepts and syntax it introduces over to NodeJS.</p>
+
+                    <p>Now, testing asynchronous systems is as easy as just persevering...</p>
+                </div>
+                <div class="bg-gray-800 rounded-b py-2 justify-center">
+                    <a href="https://www.npmjs.com/package/persevere-js">
+                        <i class="ri-npmjs-fill text-white text-4xl"></i>
+                    </a>
+                    <a href="https://github.com/JamesMcNee/persevere-js">
+                        <i class="ri-github-fill text-white text-4xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card bg-base-100 shadow-xl">
                 <figure style="min-height: 250px; max-height: 250px;"><img src="/img/botw_recipes.jpg"
                                                                            alt="BOTW: Recipes"/></figure>
                 <div class="card-body">

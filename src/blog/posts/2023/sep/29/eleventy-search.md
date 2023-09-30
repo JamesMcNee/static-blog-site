@@ -103,9 +103,30 @@ Next, we need a search component, essentially a text input which can show search
     </div>
 ```
 
-<div class="mx-6 w-2/5 mx-auto">
-  <img alt="Image showing a search box with some dummy results under it" class="mx-auto" width="100%" src="/img/blog/posts/post-content/eleventy-search/search-component-proto.png">
+<div class="flex justify-center mb-2">
+    <div class="relative">
+        <div class="form-control mx-auto sm:w-full md:w-2/3">
+            <label class="label" for="search">
+                <span class="label-text">Search Posts:</span>
+                <span class="label-text-alt">e.g. "Patch"</span>
+            </label>
+            <input id="search" autocomplete="off" type="search" placeholder="Type here" class="input input-bordered w-full" />
+        </div>
+        <div id="search-results-container" style="background-color: hsl(var(--b1))" class="card shadow-xl border-gray-600 border-solid border-2 -translate-x-[50%] left-[50%] mt-2 z-50">
+            <div id="search-results" class="card-body p-4 text-sm max-h-96 overflow-y-scroll">
+                <div class="cursor-pointer">
+                    <a class="font-bold mb-0" href="#">Post One</a><p class="mb-0">This is the synopsis for the first post, it gives a brief description as to its content.</p>
+                </div>
+                <span class="divider mt-0.5 mb-0.5"></span>
+                <div class="cursor-pointer">
+                    <a class="font-bold mb-0" href="#">Post Two</a><p class="mb-0">This is the synopsis for the second post, it gives a brief description as to its content.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 
 The above is what I came up with, if you want to use it for inspiration, you can find the full [markup for it over on my GitHub](https://github.com/JamesMcNee/static-blog-site/blob/8d110bcdd810d507ad4d7255436e4ab3f5980c16/src/index.njk#L64-L78).
 

@@ -77,12 +77,15 @@ module.exports = function (eleventyConfig) {
 
         const defaultSrc = `'self' ${myDomains.join(' ')} ${myDomains.map(d => '*.' + d).join(' ')}`
 
+        // If this has changed and needs updating, the browser spits out correct the value in the console; obviously check https://github.com/utterance/utterances/blob/master/src/client.ts#L50-L72 looks ok first.
+        const utterancesInlineScriptHash = 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='
+
         return cspBuilder({
             directives: {
                 'default-src': defaultSrc,
                 'img-src': '*',
                 'media-src': '*',
-                'style-src': `${defaultSrc} https://utteranc.es`,
+                'style-src': `${defaultSrc} '${utterancesInlineScriptHash}'`,
                 'script-src': `${defaultSrc} 'unsafe-inline' https://utteranc.es`,
                 'frame-src': `${defaultSrc} https://utteranc.es`,
             }

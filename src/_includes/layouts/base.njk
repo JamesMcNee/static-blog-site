@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="/styles/library/prism-coldark.css">
     </noscript>
 
+    <meta http-equiv="Content-Security-Policy" content="{% csp %}" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% if synopsis %}{{ synopsis }}{% else %}{{ title }}{% endif %}">
 </head>

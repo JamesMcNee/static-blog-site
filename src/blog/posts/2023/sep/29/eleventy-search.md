@@ -112,7 +112,7 @@ Next, we need a search component, essentially a text input which can show search
             </label>
             <input id="search" autocomplete="off" type="search" placeholder="Type here" class="input input-bordered w-full" />
         </div>
-        <div id="search-results-container" style="background-color: hsl(var(--b1))" class="card shadow-xl border-gray-600 border-solid border-2 -translate-x-[50%] left-[50%] mt-2">
+        <div id="search-results-container" class="card shadow-xl bg-base-100 border-gray-600 border-solid border-2 -translate-x-[50%] left-[50%] mt-2">
             <div id="search-results" class="card-body p-4 text-sm max-h-96 overflow-y-scroll">
                 <div class="cursor-pointer">
                     <a class="font-bold mb-0" href="#">Post One</a><p class="mb-0">This is the synopsis for the first post, it gives a brief description as to its content.</p>

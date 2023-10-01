@@ -8,7 +8,7 @@ const {
 
 // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#valid-date-string
 const htmlDateStringFilter = (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: 'utc' }).toFormat('yyyy-LL-dd');
+    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
 }
 
 const readableDateFilter = (dateObj) => {
@@ -59,7 +59,6 @@ module.exports = function (eleventyConfig) {
         }, {})
     });
 
-
     eleventyConfig.amendLibrary("md", mdLib => {
         const anchor = require('markdown-it-anchor')
         mdLib.use(anchor, {
@@ -70,6 +69,24 @@ module.exports = function (eleventyConfig) {
         })
 
     });
+
+    eleventyConfig.addShortcode('csp', () => {
+        const cspBuilder = require("content-security-policy-builder")
+
+        const myDomains = ['jamesmcnee.com', 'jamesmcnee.co.uk']
+
+        const defaultSrc = `'self' ${myDomains.join(' ')} ${myDomains.map(d => '*.' + d).join(' ')}`
+
+        return cspBuilder({
+            directives: {
+                'default-src': defaultSrc,
+                'img-src': '*',
+                'media-src': '*',
+                'script-src': `${defaultSrc} 'unsafe-inline' https://utteranc.es`,
+                'frame-src': `${defaultSrc} https://utteranc.es`,
+            }
+        })
+    })
 
     return {
         dir: {input: 'src', output: '_site'}

@@ -39,6 +39,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addPassthroughCopy('src/styles')
     eleventyConfig.addPassthroughCopy('src/favicon.ico')
     eleventyConfig.addPassthroughCopy('src/robots.txt')
+    eleventyConfig.addPassthroughCopy('src/scripts', { filter: (f) => f !== 'main.js'})
 
     eleventyConfig.addFilter("readableDate", readableDateFilter);
     eleventyConfig.addFilter('htmlDateString', htmlDateStringFilter);
@@ -77,16 +78,20 @@ module.exports = function (eleventyConfig) {
 
         const defaultSrc = `'self' ${myDomains.join(' ')} ${myDomains.map(d => '*.' + d).join(' ')}`
 
+        const allowedInlineScriptHashes = [
+            'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' // The post search script on index
+        ]
+
         // If this has changed and needs updating, the browser spits out correct the value in the console; obviously check https://github.com/utterance/utterances/blob/master/src/client.ts#L50-L72 looks ok first.
-        const utterancesInlineScriptHash = 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='
+        const utterancesInlineStyleHash = 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='
 
         return cspBuilder({
             directives: {
                 'default-src': defaultSrc,
                 'img-src': '*',
                 'media-src': '*',
-                'style-src': `${defaultSrc} '${utterancesInlineScriptHash}'`,
-                'script-src': `${defaultSrc} 'unsafe-inline' https://utteranc.es`,
+                'style-src': `${defaultSrc} '${utterancesInlineStyleHash}'`,
+                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://utteranc.es`,
                 'frame-src': `${defaultSrc} https://utteranc.es`,
             }
         })

@@ -18,44 +18,14 @@
         <link rel="stylesheet" href="/styles/library/prism-coldark.css">
     </noscript>
 
+    <script type="text/javascript" src="/scripts/utilities.js"></script>
+
     <meta http-equiv="Content-Security-Policy" content="{% csp %}" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% if synopsis %}{{ synopsis }}{% else %}{{ title }}{% endif %}">
 </head>
 <body>
-<script type="text/javascript">
-    function addOnClickOutsideListener(element, func) {
-        const isVisible = elem => !!elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
-
-        const outsideClickListener = event => {
-            if (!element.contains(event.target) && isVisible(element)) {
-                func(element);
-                removeClickListener();
-            }
-        }
-
-        const removeClickListener = () => {
-            element.removeAttribute('click-outside-attached')
-            document.removeEventListener('click', outsideClickListener);
-        }
-
-        if (element.getAttribute('click-outside-attached') !== 'true') {
-            element.setAttribute('click-outside-attached', 'true')
-            document.addEventListener('click', outsideClickListener);
-        }
-    }
-
-    function debounce(func, timeout = 250) {
-        let timer;
-        return (...args) => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                func.apply(this, args);
-            }, timeout);
-        };
-    }
-</script>
 {% include "../components/navigation.njk" %}
 {{ content | safe }}
 </body>

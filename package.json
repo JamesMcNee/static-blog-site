@@ -22,14 +22,14 @@
     "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
     "autoprefixer": "^10.4.7",
     "css-loader": "^6.7.1",
-    "daisyui": "^3.7.7",
+    "daisyui": "^3.8.2",
     "markdown-it-anchor": "^8.6.7",
     "mini-css-extract-plugin": "^0.11.3",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.14",
     "postcss-loader": "7.3.3",
     "rimraf": "^3.0.2",
-    "tailwindcss": "^3.0.24",
+    "tailwindcss": "^3.3.3",
     "webpack": "^5.76.0",
     "webpack-cli": "^4.9.2"
   }

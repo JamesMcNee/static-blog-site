@@ -96,7 +96,7 @@ Next, we need a search component, essentially a text input which can show search
                 </label>
                 <input id="search" autocomplete="off" type="search" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
             </div>
-            <div id="search-results-container" style="background-color: hsl(var(--b1))" class="card shadow-xl absolute border-gray-600 border-solid border-2 translate-y-2 left-0 ml-[2%] w-[94%] z-50 md:left-auto md:w-96 md:-translate-x-1/2 lg:-translate-x-1/4 invisible">
+            <div id="search-results-container" class="card shadow-xl bg-base-100 absolute border-gray-600 border-solid border-2 translate-y-2 left-0 ml-[2%] w-[94%] z-50 md:left-auto md:w-96 md:-translate-x-1/2 lg:-translate-x-1/4 invisible">
                 <div id="search-results" class="card-body p-4 text-sm max-h-96 overflow-y-scroll"></div>
             </div>
         </div>

@@ -82,6 +82,7 @@ module.exports = function (eleventyConfig) {
                 'default-src': defaultSrc,
                 'img-src': '*',
                 'media-src': '*',
+                'style-src': `${defaultSrc} https://utteranc.es`,
                 'script-src': `${defaultSrc} 'unsafe-inline' https://utteranc.es`,
                 'frame-src': `${defaultSrc} https://utteranc.es`,
             }

@@ -14,7 +14,11 @@ ul {
     @apply list-disc ml-10
 }
 
-ul li {
+ol {
+    @apply list-decimal ml-10
+}
+
+ul,ol li {
     @apply last:mb-4
 }
 

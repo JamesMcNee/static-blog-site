@@ -91,8 +91,9 @@ module.exports = function (eleventyConfig) {
                 'img-src': '*',
                 'media-src': '*',
                 'style-src': `${defaultSrc} '${utterancesInlineStyleHash}'`,
-                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://utteranc.es`,
+                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://utteranc.es`,
                 'frame-src': `${defaultSrc} https://utteranc.es`,
+                'object-src': `'none'`
             }
         })
     })

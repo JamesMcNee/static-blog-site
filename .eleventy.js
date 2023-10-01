@@ -94,6 +94,7 @@ module.exports = function (eleventyConfig) {
                 'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://utteranc.es`,
                 'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
                 'frame-src': `${defaultSrc} https://utteranc.es`,
+                'frame-ancestors': `'none'`,
                 'object-src': `'none'`
             }
         })

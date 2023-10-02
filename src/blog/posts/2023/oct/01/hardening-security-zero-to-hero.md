@@ -173,7 +173,7 @@ permalink: _headers
   Content-Security-Policy: default-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk; img-src *; media-src *; style-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='; script-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'unsafe-inline' 'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' https://utteranc.es; script-src-attr 'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='; frame-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk https://utteranc.es; frame-ancestors 'none'; object-src 'none'
 ```
 
-Right-o CSP done, `+25 points` for ~~gryffindor~~ me! Next...
+Right-o CSP done, `+25 points`, `+10 points` for handing XSS protection (implicit in the CSP) and `+5 points` for having a strong CSP! Next...
 
 <div class="divider"><i class="ri-lock-line"></i></div>
 
@@ -198,7 +198,7 @@ permalink: _headers
 ```
 {% endraw %}
 
-Another one done, `+20 points`!
+Another one done, `+20 points` for ~~gryffindor~~ me! Next!
 
 <div class="divider"><i class="ri-lock-line"></i></div>
 
@@ -220,6 +220,8 @@ permalink: _headers
     X-Frame-Options: DENY
 ```
 {% endraw %}
+
+Boom, that's a wrap, final one done, `+20 points`!
 
 #### Summarising
 If you made it this far, thanks, I hope it was useful! In this post, I covered how I took my static Eleventy site from having a security rating of `D-` score over at [observatory.mozilla.org](https://observatory.mozilla.org) to `A+` in a few hours, and now, hopefully, you can do the same!

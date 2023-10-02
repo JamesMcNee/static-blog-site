@@ -92,6 +92,15 @@ In my case, I used a combination of `1` (shifting scripts to separate files) and
 
 I actually believe that using the nonce technique is a good option, and if it was easily doable for my setup, I may have chosen to do this rather than move scripts out into their own files. Alas, because I have a static site, hosted by Cloudflare Pages, I cannot easily inject a nonce value onto each script tag per request without using something like CF workers. I'd rather avoid the additional complexity and potential cost (you get so much for free), and just use the other two mechanisms.
 
+<div class="md:ml-6">
+
+##### A brief note on CSP reporting
+CSP's provide the ability to report violations to a given endpoint. I did not end up actually using this feature, but it can be a good way to implement a CSP in a limited fashion, by enabling report only mode, to make sure that nothing is missed.
+
+You can read more about this feature, including how to utilise it, [over on MDN here](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/report-to).
+
+</div>
+
 **Building the CSP** <br>
 Right, let's actually build the CSP header.
 

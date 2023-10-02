@@ -101,7 +101,7 @@ You can read more about this feature, including how to utilise it, [over on MDN 
 
 </div>
 
-**Building the CSP** <br>
+##### Building the CSP
 Right, let's actually build the CSP header.
 
 A CSP header looks like the following:

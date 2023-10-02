@@ -232,7 +232,7 @@ permalink: _headers
 ```
 {% endraw %}
 
-Boom, that's a wrap, final one done, `+20 points`!
+Boom, that's a wrap, final one done, `+20 points` and an additional `+5 points` too apparently!
 
 #### Summarising
 If you made it this far, thanks, I hope it was useful! In this post, I covered how I took my static Eleventy site from having a security rating of `D-` score over at [observatory.mozilla.org](https://observatory.mozilla.org) to `A+` in a few hours, and now, hopefully, you can do the same!

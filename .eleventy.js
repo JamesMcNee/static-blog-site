@@ -100,6 +100,10 @@ module.exports = function (eleventyConfig) {
         })
     })
 
+    eleventyConfig.addShortcode('commitShaOrBranch', () => {
+        return process.env.CF_PAGES_COMMIT_SHA ?? 'main'
+    })
+
     return {
         dir: {input: 'src', output: '_site'}
     };

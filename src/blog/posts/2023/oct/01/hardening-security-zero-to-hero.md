@@ -148,7 +148,7 @@ eleventyConfig.addShortcode('csp', () => {
 ```
 <custom-element>
     <banner type="info">
-        Now, let me first address `unsafe-inline` here, before I get comments (I wish) telling me that I said it was bad and then went and used it! Well it's actually considered best practice to add `unsafe-inline` as a fallback for older browsers that don't support the hashing of scripts. Therefore I conditionally add it based on if I have a script hash or not!
+        Now, let me first address `unsafe-inline` here, before I get comments (I wish) telling me that I said it was bad and then went and used it! Well it's actually considered best practice to add `unsafe-inline` as a fallback for older browsers that don't support the hashing of scripts, if the browser does, it will be discounted. Therefore, I conditionally add it based on if I have a script hash or not!
   </banner>
 </custom-element>
 

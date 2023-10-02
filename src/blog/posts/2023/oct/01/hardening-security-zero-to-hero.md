@@ -194,7 +194,7 @@ This one is much simpler than the last (you will be glad to hear), it is essenti
 - Include Sub Domains: If specified the rule will be applied to all subdomains as well as the current domain.
 - Preload: An optional parameter than when specified (must also have a max age of > 1 year, and include subdomains set to true) will include your domain in a list that browsers use to determine if your domain should only use HTTPS, without even making a request.
 
-For this one, I just applied all of the settings, I set my max age as `2 years`, included sub-domains and opted into the preload register. My Headers file now looks like:
+For this one, I just applied all of the settings, I set my max age as `2 years`, included sub-domains and opted into the preload register. My `_headers` file now looks like:
 
 {% raw %}
 ```yaml

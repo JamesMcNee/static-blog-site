@@ -11,6 +11,8 @@ labels:
   - Security
   - Javascript
   - Eleventy
+  - HTTP
+  - Headers
 date: 2023-10-01
 ---
 

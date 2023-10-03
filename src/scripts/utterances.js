@@ -1,6 +1,3 @@
-
-const currentScript = document.scripts[document.scripts.length - 1]; // A reference to the currently running script
-
 function createUtterancesScriptTag() {
     const script = document.createElement('script');// Create a new div
 
@@ -14,7 +11,7 @@ function createUtterancesScriptTag() {
     return script
 }
 
-currentScript.parentElement.insertBefore(createUtterancesScriptTag(), currentScript); // Add the newly-created div to the page
+currentScript.parentElement.insertBefore(createUtterancesScriptTag(), document.currentScript); // Add the newly-created div to the page
 
 let utterancesReady = false
 addEventListener('message', event => {

@@ -27,7 +27,7 @@ Good question, and one that until I saw my abysmal score I didn't know either! W
 
 All of this stemmed from running a scan on [observatory.mozilla.org](https://observatory.mozilla.org) after I saw it linked in a post I was reading. I had already been using Google's [Lighthouse](https://pagespeed.web.dev/) to improve the performance of my site, so when I hit run on the Mozilla Observatory, I braced myself to be informed on how brilliant I am (_\*cough\*_ Eleventy and Cloudflare are). So when the results came in and I had been awarded a `D-` I could only laugh with shame.
 
-##### So What was wrong?
+##### So what was wrong?
 Well, Observatory found the following issues with my site (I will be exploring these in more detail in the coming sections, so below are the descriptions paraphrased from [MDN](https://developer.mozilla.org/)):
 - **<span class="text-red-700">[-25 Points]</span> No Content Security Policy ([CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP))**: An added layer of security that helps to detect and mitigate certain types of attacks, including Cross-Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft, to site defacement, to malware distribution.
 - **<span class="text-red-700">[-20 Points]</span> No HTTP Strict Transport Security ([HSTS](https://developer.mozilla.org/en-US/docs/Glossary/HSTS))**: Allows a website to inform the browser that it should never load the site using HTTP and should automatically convert all attempts to access the site using HTTP to HTTPS requests instead. It consists of one HTTP header, `Strict-Transport-Security`, sent by the server with the resource.

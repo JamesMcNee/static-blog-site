@@ -177,9 +177,6 @@ The `{% csp %}` here will be expanded during the eleventy build to the actual fu
 {% endraw %}
 
 ```yaml
----
-permalink: _headers
----
 /*
   Content-Security-Policy: default-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk; img-src *; media-src *; style-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='; script-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'unsafe-inline' 'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' https://utteranc.es; script-src-attr 'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='; frame-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk https://utteranc.es; frame-ancestors 'none'; object-src 'none'
 ```

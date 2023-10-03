@@ -1,6 +1,8 @@
 
 const currentScript = document.currentScript; // A reference to the currently running script
 
+const loadingSpinner = document.getElementById("utterances-spinner")
+
 function createUtterancesScriptTag() {
     const script = document.createElement('script');// Create a new div
 
@@ -24,6 +26,7 @@ addEventListener('message', event => {
 
     utterancesReady = true
 
+    loadingSpinner.remove()
     applyUtterancesTheme()
 });
 

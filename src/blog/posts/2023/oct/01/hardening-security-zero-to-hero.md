@@ -45,7 +45,7 @@ I have an admission to make, although I have heard those three letters banded ar
 
 So, assuming that you have already read the definition above from MDN, and pulled a face at the vagueness of it, I shall attempt to summarise. A CSP is an HTTP header that instructs clients (browsers) where the server expects content to be loaded from, thus preventing assets from loading from an unknown source. It describes where things like images, video, scripts and styles are allowed to originate from and each of these are individually addressable within the header.
 
-<div class="md:ml-6">
+<div class="md:ml-6 bg-base-300 md:bg-transparent">
 
 ##### A brief note on the `<meta>` tag
 It's possible to emulate HTTP response headers (to varying degrees of success) using the `<meta>` tag, and setting the `http-equiv` attribute to the name of the header you're trying to use. If you have never come across this concept before, you can read more about it over on [this page by w3](https://www.w3.org/International/questions/qa-http-and-lang#meta_summary), the standards authority for the web.
@@ -94,7 +94,7 @@ In my case, I used a combination of `1` (shifting scripts to separate files) and
 
 I actually believe that using the nonce technique is a good option, and if it was easily doable for my setup, I may have chosen to do this rather than move scripts out into their own files. Alas, because I have a static site, hosted by Cloudflare Pages, I cannot easily inject a nonce value onto each script tag per request without using something like CF workers. I'd rather avoid the additional complexity and potential cost (you get so much for free), and just use the other two mechanisms.
 
-<div class="md:ml-6">
+<div class="md:ml-6 bg-base-300 md:bg-transparent">
 
 ##### A brief note on CSP reporting
 CSP's provide the ability to report violations to a given endpoint. I did not end up actually using this feature, but it can be a good way to implement a CSP in a limited fashion, by enabling report only mode, to make sure that nothing is missed.

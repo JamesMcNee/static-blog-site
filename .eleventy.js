@@ -78,6 +78,11 @@ module.exports = function (eleventyConfig) {
 
         const defaultSrc = `'self' ${myDomains.join(' ')} ${myDomains.map(d => '*.' + d).join(' ')}`
 
+        const allowedScriptDomains = [
+            "https://utteranc.es",
+            "https://static.cloudflareinsights.com"
+        ]
+
         const allowedInlineScriptHashes = [
             'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' // The post search script on index
         ]
@@ -91,7 +96,7 @@ module.exports = function (eleventyConfig) {
                 'img-src': '*',
                 'media-src': '*',
                 'style-src': `${defaultSrc} '${utterancesInlineStyleHash}'`,
-                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://utteranc.es`,
+                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
                 'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
                 'frame-src': `${defaultSrc} https://utteranc.es`,
                 'frame-ancestors': `'none'`,

@@ -92,7 +92,7 @@ module.exports = function (eleventyConfig) {
 
         return cspBuilder({
             directives: {
-                'default-src': 'none',
+                'default-src': `'none'`,
                 'img-src': '* data:',
                 'media-src': '*',
                 'connect-src': `${defaultSrc}`,

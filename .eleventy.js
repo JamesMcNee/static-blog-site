@@ -103,8 +103,8 @@ module.exports = function (eleventyConfig) {
                 'frame-src': `${defaultSrc} https://utteranc.es`,
                 'frame-ancestors': `'none'`,
                 'object-src': `'none'`,
-                'form-action': 'self',
-                'base-uri': 'none'
+                'form-action': `'self'`,
+                'base-uri': `'none'`
             }
         })
     })

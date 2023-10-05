@@ -92,15 +92,19 @@ module.exports = function (eleventyConfig) {
 
         return cspBuilder({
             directives: {
-                'default-src': defaultSrc,
-                'img-src': '*',
+                'default-src': 'none',
+                'img-src': '* data:',
                 'media-src': '*',
+                'connect-src': `${defaultSrc}`,
+                'font-src': `${defaultSrc}`,
                 'style-src': `${defaultSrc} '${utterancesInlineStyleHash}'`,
                 'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
                 'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
                 'frame-src': `${defaultSrc} https://utteranc.es`,
                 'frame-ancestors': `'none'`,
-                'object-src': `'none'`
+                'object-src': `'none'`,
+                'form-action': 'self',
+                'base-uri': 'none'
             }
         })
     })

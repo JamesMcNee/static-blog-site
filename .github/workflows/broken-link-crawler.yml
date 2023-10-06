@@ -1,0 +1,21 @@
+name: Check for broken links
+on:
+  workflow_dispatch: # allow manual trigger
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 10 * * *" #Every day of the week at 10am
+jobs:
+  crawl_for_broken_links:
+    runs-on: ubuntu-latest
+    name: Broken-Links-Crawler
+    steps:
+      - name: Checking links
+        uses: ScholliYT/Broken-Links-Crawler-Action@v3
+        with:
+          website_url: "https://jamesmcnee.com"
+          exclude_url_prefix: "mailto:,https://www.linkedin.com,https://linkedin.com,https://twitter.com,https://www.cloudflare.com,https://support.cloudflare.com,https://dash.cloudflare.com"
+          verbose: "true"
+          max_retry_time: 30
+          max_retries: 5

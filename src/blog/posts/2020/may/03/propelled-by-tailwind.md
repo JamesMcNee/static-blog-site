@@ -24,4 +24,4 @@ Tailwind helps you to use the `DRY (don't repeat yourself)` principal while also
 Anyway, that is enough advertising for the framework. I have only used it once in a limited fashion, and I am not sure how easy/nice it would be to integrate with an existing project. I am however really excited about the potential this could provide for me to abstract the CSS creation on my projects and not end up fighting with the implementation provided by the likes of bootstrap.
 
 A closing note:
-I aim to try to build a small/medium project using Tailwind and give it a proper go. I found an article: [Angular 8 + Tailwind CSS Guide](https://dev.to/seankerwin/angular-8-tailwind-css-guide-3m45) by [Sean Kerwin](https://seankerwin.co.uk/home) extremely useful in getting tailwind set up to be used inside of Angular. 
+I aim to try to build a small/medium project using Tailwind and give it a proper go. I found an article: [Angular 8 + Tailwind CSS Guide](https://dev.to/seankerwin/angular-8-tailwind-css-guide-3m45) by Sean Kerwin extremely useful in getting tailwind set up to be used inside of Angular. 

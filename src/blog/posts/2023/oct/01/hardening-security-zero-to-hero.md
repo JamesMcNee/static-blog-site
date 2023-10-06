@@ -56,9 +56,9 @@ It is possible to have a CSP implemented using a `<meta>` tag, but there are som
 As touched on, a CSP header comprises rules targeting the various pieces of dynamic content that a site can load, here are the ones that were important to me, along with where I wanted to allow content from:
 - **`img-src`**: Allow images to be loaded from any origin.
 - **`media-src`**: Allow audio/video to be loaded from any origin too.
-- **`style-src`**: Allow styles to only be loadable from my own origins jamesmcnee[.co.uk | .com], along with a specific style for [utterances](https://utteranc.es), which I use for my post comments section.
-- **`script-src`**: Allow scripts to be loadable from my own origins and utterances.
-- **`frame-src`**: Allow `i-frames` etc to connect to my own origins and utterances.
+- **`style-src`**: Allow styles to only be loadable from my own origins jamesmcnee[.co.uk | .com], along with styles from [giscus](https://giscus.app), which I use for my post comments section.
+- **`script-src`**: Allow scripts to be loadable from my own origins and giscus.
+- **`frame-src`**: Allow `i-frames` etc to connect to my own origins and giscus.
 - **`frame-ancestors`**: Do not allow my site to be i-framed, anywhere. If I need to do this for my own origin in the future, I'll open it up.
 - **`object-src`**: Do not allow `<object>` and `<embed>` elements.
 
@@ -139,18 +139,15 @@ eleventyConfig.addShortcode('csp', () => {
         'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' // The post search script on index
     ]
 
-    // If this has changed and needs updating, the browser spits out correct the value in the console; obviously check https://github.com/utterance/utterances/blob/master/src/client.ts#L50-L72 looks ok first.
-    const utterancesInlineStyleHash = 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='
-
     return cspBuilder({
         directives: {
             'default-src': defaultSrc,
             'img-src': '*',
             'media-src': '*',
-            'style-src': `${defaultSrc} '${utterancesInlineStyleHash}'`,
-            'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://utteranc.es`,
+            'style-src': `${defaultSrc} https://giscus.app`,
+            'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} https://giscus.app`,
             'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
-            'frame-src': `${defaultSrc} https://utteranc.es`,
+            'frame-src': `${defaultSrc} https://giscus.app`,
             'frame-ancestors': `'none'`,
             'object-src': `'none'`
         }
@@ -178,7 +175,7 @@ The `{% csp %}` here will be expanded during the eleventy build to the actual fu
 
 ```yaml
 /*
-  Content-Security-Policy: default-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk; img-src *; media-src *; style-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='; script-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'unsafe-inline' 'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' https://utteranc.es; script-src-attr 'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='; frame-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk https://utteranc.es; frame-ancestors 'none'; object-src 'none'
+  Content-Security-Policy: default-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk; img-src *; media-src *; style-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk https://giscus.app; script-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk 'unsafe-inline' 'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' https://giscus.app; script-src-attr 'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='; frame-src 'self' jamesmcnee.com jamesmcnee.co.uk *.jamesmcnee.com *.jamesmcnee.co.uk https://giscus.app; frame-ancestors 'none'; object-src 'none'
 ```
 
 Right-o CSP done, `+25 points`, `+10 points` for handing XSS protection (implicit in the CSP) and `+5 points` for having a strong CSP! Next...

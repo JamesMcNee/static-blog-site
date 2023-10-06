@@ -79,16 +79,17 @@ module.exports = function (eleventyConfig) {
         const defaultSrc = `'self' ${myDomains.join(' ')} ${myDomains.map(d => '*.' + d).join(' ')}`
 
         const allowedScriptDomains = [
-            "https://utteranc.es",
+            "https://giscus.app",
             "https://static.cloudflareinsights.com"
+        ]
+
+        const allowedStyleDomains = [
+            "https://giscus.app"
         ]
 
         const allowedInlineScriptHashes = [
             'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' // The post search script on index
         ]
-
-        // If this has changed and needs updating, the browser spits out correct the value in the console; obviously check https://github.com/utterance/utterances/blob/master/src/client.ts#L50-L72 looks ok first.
-        const utterancesInlineStyleHash = 'sha256-9HupEqQsOKAA3TMVtaZh8USULhFpwYGuWFk+44sVSgg='
 
         return cspBuilder({
             directives: {
@@ -97,10 +98,10 @@ module.exports = function (eleventyConfig) {
                 'media-src': '*',
                 'connect-src': `${defaultSrc}`,
                 'font-src': `${defaultSrc}`,
-                'style-src': `${defaultSrc} '${utterancesInlineStyleHash}'`,
+                'style-src': `${defaultSrc} ${allowedStyleDomains.join(' ')}`,
                 'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
                 'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
-                'frame-src': `${defaultSrc} https://utteranc.es`,
+                'frame-src': `${defaultSrc} https://giscus.app`,
                 'frame-ancestors': `'none'`,
                 'object-src': `'none'`,
                 'form-action': `'self'`,

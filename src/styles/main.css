@@ -42,10 +42,6 @@ h5 {
     @apply pb-2 font-bold
 }
 
-.utterances {
-    max-width: unset;
-}
-
 /** START: Custom Element **/
 custom-element banner {
     @apply shadow-2xl;

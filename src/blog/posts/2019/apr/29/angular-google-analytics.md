@@ -15,7 +15,7 @@ labels:
 date: 2019-04-29
 ---
 
-I recently wanted to add Google Analytics into my portfolio page and blog to track engagement and interaction. I did not need anything fancy basically just page views and button/link clicks. I started as I usually do by doing a quick google, something similar to '*Google Analytics Angular*' and found a good article from Kissa Eric on  [Scotch.io](https://scotch.io/tutorials/integrating-google-analytics-with-angular-2) with a detailed breakdown on how exactly GA can be added to an Angular project.
+I recently wanted to add Google Analytics into my portfolio page and blog to track engagement and interaction. I did not need anything fancy basically just page views and button/link clicks. I started as I usually do by doing a quick google, something similar to '*Google Analytics Angular*' and found a good article from Kissa Eric on [Scotch.io](https://scotch.io) (unfortunately the page has now been removed) with a detailed breakdown on how exactly GA can be added to an Angular project.
 
 It basically boils down to adding the javascript provided by Google to the *index.html* file then creating an Angular service to send GA tracking events. As mentioned, this article was really useful in helping me to add Google Analytics to my project. The one area I think that was lacking however was in the way that it is recommended to send events on button clicks etc. The method provided is very programatic, binding to the click event of the element and then passing data to the service like this:
 ```typescript

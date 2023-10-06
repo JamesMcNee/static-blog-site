@@ -59,4 +59,4 @@ This directive allows me to tag an input or any element really and have click tr
 ```
 As you can see I have added the directive to the list item *app-analytics*, I use 'navigation' as my *analyticsCategory* to allow grouping of all navigation events in GA. I then set the *analyticsAction* and *analyticsLabel*.
 
-In summary, following the aforementioned tutorial on [Scotch.io](https://scotch.io/tutorials/integrating-google-analytics-with-angular-2), along with my directive, you can create a powerful way of tracking click events on any element. With a little tweaking you could also track other events like hovering etc.
+In summary, following the aforementioned tutorial on [Scotch.io](https://scotch.io) (again, unfortunately the page has been removed), along with my directive, you can create a powerful way of tracking click events on any element. With a little tweaking you could also track other events like hovering etc.

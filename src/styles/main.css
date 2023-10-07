@@ -19,7 +19,7 @@ ol {
 }
 
 ul,ol li {
-    @apply last:mb-4
+    @apply last:mb-4 list-inside
 }
 
 a {

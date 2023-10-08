@@ -93,6 +93,14 @@ custom-element banner[type="info"]:before {
     background-color: hsl(var(--in));
     content: "i";
 }
+custom-element banner[type="note"] {
+    background-color: #3730a3;
+    border-left-color: #818cf8;
+}
+custom-element banner[type="note"]:before {
+    background-color: #818cf8;
+    content: "≡";
+}
 custom-element banner[type="warning"] {
     border-left-color: hsl(var(--wa));
     background-color: hsl(var(--wac));

@@ -158,7 +158,7 @@ main "$@"
 Boom! Now we will only be asked to confirm potentially destructive actions (`edit`, `delete`, `scale` and `apply` etc).
 
 <custom-element>
-    <banner type="info">
+    <banner type="note">
         You will notice that I have added `completion` to my list of safe commands, this is to allow for kubectl autocompletion to work still, which by the way it very much does with this mechanism. Snazzy.
   </banner>
 </custom-element>

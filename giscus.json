@@ -1,0 +1,9 @@
+{
+  "originsRegex": [
+    "http://localhost:[0-9]+",
+    "http://127.0.0.1:[0-9]+",
+    "http://0.0.0.0:[0-9]+",
+    "^https://([a-z.]+)?jamesmcnee(.co.uk|.com)$"
+  ],
+  "defaultCommentOrder": "newest"
+}

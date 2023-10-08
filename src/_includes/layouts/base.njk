@@ -1,6 +1,6 @@
 {%- from "../system/component.njk" import component -%}
 <!doctype html>
-<html lang="en" data-theme="fantasy">
+<html lang="en" data-theme="fantasy" class="h-full">
 <head>
     <title>{{ title }} - James McNee</title>
     <link rel="stylesheet" type="text/css" href="/assets/main.css"/>
@@ -23,7 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% if synopsis %}{{ synopsis }}{% else %}{{ title }}{% endif %}">
 </head>
-<body>
+<body class="h-full flex flex-col">
 {% include "../components/navigation.njk" %}
 {{ content | safe }}
 {% include "../components/footer.njk" %}

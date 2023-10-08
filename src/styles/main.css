@@ -50,7 +50,7 @@ h5 {
 custom-element banner {
     @apply shadow-2xl;
 
-    color: hsl(var(--pc));
+    color: white;
     background-color: white;
     width: calc(100% - 3em);
     padding: 1em 1em 1em 1.5em;

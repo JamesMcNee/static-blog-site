@@ -9,7 +9,7 @@ permalink: /tags/{{ tag | slugify }}/
 ---
 
 {% set postslist = collections.postTags[tag]  %}
-<div class="lg:mx-24 xl:mx-48 p-6 md:p-12">
+<div class="lg:mx-24 xl:mx-48 p-6 md:p-12 flex-1">
     <div class="flex">
         <span class="flex-1"></span>
         <span class="badge badge-lg badge-secondary">{{ tag }}</span>

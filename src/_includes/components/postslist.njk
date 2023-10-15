@@ -9,7 +9,7 @@
                 <span class="italic text-sm"><i class="ri-hourglass-2-fill mr-1"></i>{{ post.content | readTime }}</span>
             </div>
             <h2 class="card-title">
-                <a href="{{ post.url | url }}">{{ post.data.title }}</a>
+                <a href="{{ post.url | url }}" class="text-secondary">{{ post.data.title }}</a>
             </h2>
             <p>{{ post.data.synopsis }}</p>
             <div class="flex flex-wrap">

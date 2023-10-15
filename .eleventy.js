@@ -31,6 +31,8 @@ const readTimeFilter = (content) => {
 
 module.exports = function (eleventyConfig) {
 
+    const isBuildingInCI = !!process.env['CF_PAGES_BRANCH']
+
     eleventyConfig.addPlugin(eleventyNavigationPlugin);
     eleventyConfig.addPlugin(syntaxHighlight);
     eleventyConfig.addPlugin(pluginRss);
@@ -46,7 +48,7 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addFilter("readTime", readTimeFilter);
 
     eleventyConfig.addFilter('shouldDisplayPost', function(collection) {
-        return collection.filter(item => !item.data?.draft || process.env['CF_PAGES_BRANCH'] === 'preview')
+        return collection.filter(item => !item.data?.draft || process.env['CF_PAGES_BRANCH'] === 'preview' || !isBuildingInCI)
     });
 
     eleventyConfig.addCollection("postTags", function (collectionApi) {

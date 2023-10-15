@@ -45,6 +45,10 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addFilter('htmlDateString', htmlDateStringFilter);
     eleventyConfig.addFilter("readTime", readTimeFilter);
 
+    eleventyConfig.addFilter('shouldDisplayPost', function(collection) {
+        return collection.filter(item => !item.data?.draft || process.env['CF_PAGES_BRANCH'] === 'preview')
+    });
+
     eleventyConfig.addCollection("postTags", function (collectionApi) {
         const allPosts = collectionApi.getFilteredByTag("posts")
 

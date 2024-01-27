@@ -27,10 +27,18 @@ In order to properly explain what I mean by 'shallow integration tests', it's so
 - **Integration Tests** differ from unit tests in that rather than testing an isolated piece of code such as a function or method, they test the integration between all the units of your application. Integration tests tend to be higher level than a unit test, not exercising every edge case, but rather testing core flows through your application.
 
 <br>
-When I refer to a 'shallow integration test' what I am referring to is a test that sits at a boundary of your application and tests the integration between your code that interacts with an external system (or is interacted with). Most commonly this will either be at the `repository` or `controller` layer.<br><br>
 
-- A **repository** is a class that is responsible for handling data exchange between your application and an external system, this could be a database, HTTP service, message queue or even something like a printer.
-- A **controller** is a class that handles the interaction into your application, this could be a set of HTTP endpoints, a console/terminal prompt a consumer of a messaging queue or even a physical button that someone might press.
+When I refer to a 'shallow integration test' what I am referring to is a test that sits at a boundary of your application and tests the integration between your code that interacts with an external system (or is interacted with). Most commonly this will either be at the `repository` or `controller` layer.<br>
+
+<custom-element>
+    <banner type="info">
+        <ul>
+            <li>A <b>repository</b> is a class that is responsible for handling data exchange between your application and an external system, this could be a database, HTTP service, message queue or even something like a printer.</li>
+            <li>A <b>controller</b> is a class that handles the interaction into your application, this could be a set of HTTP endpoints, a console/terminal prompt a consumer of a messaging queue or even a physical button that someone might press.</li>
+        </ul>
+    </banner>
+</custom-element>
 
 <br>
+
 Imagine that we have an application that serves a HTTP API for a library, one of the functions that this API performs is allowing patrons to check if books are available to borrow. The API is backed by a `MongoDB` database which it can use to track and update the availability of books.

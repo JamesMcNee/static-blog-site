@@ -46,6 +46,10 @@ h5 {
     @apply pb-2 font-bold
 }
 
+blockquote {
+    @apply relative border-s-4 ps-4 ml-4
+}
+
 /** START: Custom Element **/
 custom-element banner {
     @apply shadow-2xl;

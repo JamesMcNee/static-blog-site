@@ -47,9 +47,17 @@ module.exports = function (eleventyConfig) {
     eleventyConfig.addFilter('htmlDateString', htmlDateStringFilter);
     eleventyConfig.addFilter("readTime", readTimeFilter);
 
+    const shouldDisplayPost = item => !item.data?.draft || process.env['CF_PAGES_BRANCH'] === 'preview' || !isBuildingInCI
+
     eleventyConfig.addFilter('shouldDisplayPost', function(collection) {
-        return collection.filter(item => !item.data?.draft || process.env['CF_PAGES_BRANCH'] === 'preview' || !isBuildingInCI)
+        return collection.filter(shouldDisplayPost)
     });
+
+    eleventyConfig.addCollection('visiblePosts', (collectionApi) => {
+        const allPosts = collectionApi.getFilteredByTag("posts")
+
+        return allPosts.filter(shouldDisplayPost)
+    })
 
     eleventyConfig.addCollection("postTags", function (collectionApi) {
         const allPosts = collectionApi.getFilteredByTag("posts")

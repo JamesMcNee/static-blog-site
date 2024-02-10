@@ -2,7 +2,7 @@
 title: Home
 layout: layouts/base.njk
 pagination:
-    data: collections.posts
+    data: collections.visiblePosts
     size: 4
     reverse: true
 permalink: "{% if pagination.pageNumber == 0 %}index.html{% elif pagination.pageNumber > 0 %}home/page-{{ pagination.pageNumber + 1 }}/index.html{% endif %}"

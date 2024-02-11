@@ -71,7 +71,20 @@ The above may seem a little verbose, with which I would tend to agree, however, 
 
 Not only does providing this level of granularity protect from unexpected actions by the user of the role, either intentional or not, it also provides for clear auditing (in both git and the K8s cluster) of what access has been extended to other workloads. In the above example we can see the role `kafka-connect` has been shared with the workload named `my-kafka-connector` (workloads are one-to-one with namespaces in our clusters and are therefore unique).
 
-### An ordering problem
+### Two problems to overcome
+Having such a flexible schema for expressing permissions brings two main challenges that need to be overcome
+
+1. If a role is described that grants to 'all' objects within a schema, how do we ensure the role accrues permissions to new objects created after the granting code has been run?
+2. If a role is described that grants to a specific object, how do we account for the fact that it may not yet exist?
+
+Let's explore these two issues...
+
+#### Perpetual permissions
+When a developer defines their role and deploys it via their CI/CD pipeline as part of their application release, it is fairly trivial for our code to apply the grants to 'every object' that exists in the specified schema, assuming they have defined a role that should do this. The harder part is keeping this statement true as new objects are created after the fact.
+
+Postgres has a system called [default privileges](https://www.postgresql.org/docs/current/sql-alterdefaultprivileges.html) which essentially solves the issue above, it allows for describing the permissions that should be granted when new objects are created at either a database or schema level. In terms of this requirement, default privilege is a valid option.
+
+#### An ordering problem
 Described in the previous section is a mechanism for defining and sharing custom roles with other workloads, you will note that the example role gave specific access to a single object (table) in a single schema. This is all well and good, assuming that the subject of the grant already exists, if not we would not be able to set up our permissions role.
 
 This posed more of an issue for us than might be immediately obvious, as it seems only logical that users would create tables etc before adding them to a custom role. Ultimately, yes it is logical for this to happen and as a series of events, very may well happen, but one needs to remember the way we are managing the datastore, using a K8s CRD ultimately deployed via helm. This means that as soon as an application's CI/CD pipeline runs it (helm) will create both the applications deployment and the resource representing the database, these will and must be able to handle being applied in any order.
@@ -86,7 +99,7 @@ If a developer has a bunch of commits stacked up such as (ordered as a git log, 
 There are a few ways to potentially tackle this, some of which might be:
 - Document it as a 'known gotcha' and hope that developers will learn to roll out changes in isolation, e.g. add the script to create the table, roll it to prod, then add the grant.
 - Make the controller essentially swallow the error and ignore it if the object doesn't exist.
-- Somehow hook into the creation of database objects and handle grants on the fly.
+- Teach Postgres how to dynamically assign the permissions.
 
 <br />Spoiler alert, it's the third one that we went with and to which this article pertains! But let's explore those other two.
 
@@ -96,6 +109,28 @@ Adding documentation for quirks and calling it a day is a last resort option rea
 
 > Make the controller essentially swallow the error and ignore it if the object doesn't exist.
 
-There are a few issues with this one, but the main one is that unless the spec of the resource changes the controller will not run. Therefore if the above scenario plays out as described, the grant will not be applied and then will also not try again until another unrelated change to the resource spec is made. Horrid.
+There are a few issues with this one, but the main one is that unless the spec of the resource changes the controller will not run. Therefore if the above scenario plays out as described, the grant will not be applied and then will also not try again until another unrelated change to the resource spec is made.
 
 ### Event Triggers to the rescue
+So how can you grant permissions on an object that doesn't (yet) exits? Well, as far as I know, you cannot. But all hope is not lost, because what if we can somehow hook into the lifecycle (create, update, delete) of objects in the database and run our grants at this point in time? Luckily Postgres has a mechanism for this, [Event Triggers](https://www.postgresql.org/docs/current/event-trigger-definition.html).
+
+<div class="md:ml-6 bg-base-300 md:bg-transparent">
+
+#### What is an event trigger?
+Triggers have long existed on relational databases as a way to hook into DML (Data Manipulation Language) actions such as `INSERT` and `DELETE` on rows in tables for example, however standard triggers are not able to observe DDL (Data Definition Language) events such as `CREATE` and `DROP`. Postgres' Event Trigger mechanism though is built to facilitate this and allows for the execution of code at either the beginning or end of one of these commands. A function that hooks into these events is able to observe and even reject the action, making them a powerful tool for restricting actions.
+
+The most common use case for event triggers seems to be for centralised auditing of DDL tracking when, and by whom was a table, view, sequence, etc) created, dropped or modified. Another use case discussed online in various places is around restricting the types of objects that can be created, for example blocking the creation of functions, materialised views etc.
+
+The event trigger function, whether it is invoked at the start or end of the DDL command, is fully involved in the transaction. This means that if an exception is raised at any point, the whole transaction will be aborted and rolled back if required.
+</div>
+
+Hopefully it's becoming clear how we can leverage this in order to achieve the functionality we desire, granting permissions across the board not only on objects that currently exist, but also ones that do not yet. To quote a popular maxim, it allows us to "kill two birds with one stone" (only metaphorical birds were harmed, don't worry!).
+
+#### Defining the event trigger and function
+ET and function code and blurb around what it's doing
+
+#### Reconciliation
+Why we need the reconciliation function and example
+
+### Conclusion
+Summarise, wrap up, the end etc

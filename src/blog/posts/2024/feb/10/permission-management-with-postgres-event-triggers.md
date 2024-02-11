@@ -127,10 +127,30 @@ The event trigger function, whether it is invoked at the start or end of the DDL
 Hopefully it's becoming clear how we can leverage this in order to achieve the functionality we desire, granting permissions across the board not only on objects that currently exist, but also ones that do not yet. To quote a popular maxim, it allows us to "kill two birds with one stone" (only metaphorical birds were harmed, don't worry!).
 
 #### Defining the event trigger and function
-ET and function code and blurb around what it's doing
+<custom-element>
+    <banner type="warning">
+        The functions and procedures that are described in this section will be generated and applied on the fly when the k8s resource is observed. For a single database or manual management, this may be quite hard to maintain and simply be overkill.
+  </banner>
+</custom-element>
+
+Without further ado, lets have a look at an event trigger based, on the configuration example above:
+```sql
+INSERT INTO this_code_block VALUES ('an event trigger');
+
+```
 
 #### Reconciliation
-Why we need the reconciliation function and example
+The above section describes how we can set up an event trigger to respond to new objects being created on the database and dynamically grant the appropriate permissions to roles that should have access, however it's important to also be able to 'reconcile' existing objects on the database and have permissions applied retrospectively. 
+
+A few use cases where this is needed:
+- The first time the event trigger is added to an existing database.
+- If a new object is defined as requiring roles to have access that previously did not.
+- Each time the access list is altered either allowing more roles access to an object or changing the permissions an existing one has.
+- In the event that something unexpected happened and the grants were not applied.
+
+<br />Essentially, it's going to be important to run a full reconcile each time the spec for the Kubernetes resource changes, this catches all of the above and also will allow for applying changes to the granting logic and having it retrospectively applied. 
+
+Rather than maintaining two completely disparate procedures, one for responding to DDL events and one for reconciling exiting objects, we can create a common procedure that can be called by either. This ensures that the granting logic is the exact same no matter which code path triggers it.
 
 ### Conclusion
 Summarise, wrap up, the end etc

@@ -109,7 +109,7 @@ Adding documentation for quirks and calling it a day is a last resort option rea
 
 > Make the controller essentially swallow the error and ignore it if the object doesn't exist.
 
-There are a few issues with this one, but the main one is that unless the spec of the resource changes the controller will not run. Therefore if the above scenario plays out as described, the grant will not be applied and then will also not try again until another unrelated change to the resource spec is made.
+There are a few issues with this one, but the main one is that unless the spec of the resource changes the controller will not run. Therefore, if the above scenario plays out as described, the grant will not be applied and then will also not try again until another unrelated change to the resource spec is made.
 
 ### Event Triggers to the rescue
 So how can you grant permissions on an object that doesn't (yet) exits? Well, as far as I know, you cannot. But all hope is not lost, because what if we can somehow hook into the lifecycle (create, update, delete) of objects in the database and run our grants at this point in time? Luckily Postgres has a mechanism for this, [Event Triggers](https://www.postgresql.org/docs/current/event-trigger-definition.html).
@@ -134,9 +134,86 @@ Hopefully it's becoming clear how we can leverage this in order to achieve the f
 </custom-element>
 
 Without further ado, lets have a look at an event trigger based, on the configuration example above:
-```sql
-INSERT INTO this_code_block VALUES ('an event trigger');
 
+First we will define a procedure (a function that doesn't return a value) that will contain all our granting logic, it will take the following arguments:
+- `object_id`: The oid of the object that is currently being handled.
+- `object_identity`: The identity (schema qualified name) of the object.
+- `object_type`: An enumerable mapping for the type the object is `RELATION` (Table, View), `SEQUENCE` etc.
+- `schema_name`: The name of the schema to which the object belongs.
+
+We will then template our function with the logic that checks if the current object is one we are interested in and if so, applies the grants.
+```sql
+-- Function to inspect the current object and apply grants upon it if desired.
+CREATE OR REPLACE PROCEDURE admin_schema.handle_grants(object_id oid, object_identity text, object_type text, schema_name text)
+ LANGUAGE plpgsql
+ SET search_path TO 'admin_schema', 'pg_temp'
+AS $procedure$
+    BEGIN
+      IF object_type = 'SCHEMA'
+      AND EXISTS (SELECT nspname
+                  FROM pg_catalog.pg_namespace
+                  WHERE nspname = object_identity
+                  AND nspowner::regrole::text = 'owner_role')
+      THEN
+        EXECUTE format('GRANT USAGE ON SCHEMA %s TO "kafka-connect";', object_identity);
+      END IF;
+      
+      
+      IF object_type = 'TABLE' object_identity = 'financial_reporting.outbox' THEN
+        EXECUTE format('GRANT SELECT ON %s TO "connect";', object_identity);
+      END IF;
+    END;
+    $procedure$
+```
+
+The next thing we need is a function that the event trigger will invoke directly, the shape of this function is rigid in that it must return an `event_trigger` type and also has access to retrieve data about the current invocation of the trigger. The above function could totally be folded into this, however to foreshadow slightly, it will be useful to have separate later... 
+
+There are a few interesting things about this function:
+- It uses `SECURITY DEFINER` - When a function is invoked in SQL, usually it will be done so acting as the `CURRENT_USER` i.e. the current role that is set for the session. However, it's often necessary to use a function to allow a user to perform elevated actions they could not otherwise perform, without giving them too much power. By creating a function as `SECURITY DEFINER` it means that the function should be executed as the role that owns it, rather than the invokers role.
+- It calls a mystery `pg_event_trigger_ddl_commands()` function and loops through the returned rows. This function returns the 'DDL commands' that caused the event trigger to fire, usually this will only contain a single row, but certain statements can result in multiple.
+
+<br/> Hopefully the rest is fairly self-explanatory, we loop through all the DDL commands that have happened in the current invocation and call our grant procedure after grouping the DDL commands by their target. I.e. tables, views and materialized views should all be treated as `RELATION`s.
+
+```sql
+-- Function to be invoked directly by the event trigger
+CREATE OR REPLACE FUNCTION admin_schema.handle_role_grants_event_trigger()
+ RETURNS event_trigger
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'admin_schema', 'pg_temp'
+AS $function$
+    DECLARE
+        obj RECORD;
+    BEGIN
+        FOR obj IN SELECT * FROM pg_event_trigger_ddl_commands()
+            LOOP
+                IF obj.command_tag IN ('CREATE TABLE', 'CREATE VIEW', 'CREATE MATERIALIZED VIEW', 'CREATE TABLE AS') THEN
+                    CALL "admin_schema".handle_grants(obj.objid, obj.object_identity, 'RELATION', obj.schema_name);
+                end if;
+
+                IF obj.command_tag = 'CREATE SEQUENCE' THEN
+                    CALL "admin_schema".handle_grants(obj.objid, obj.object_identity, 'SEQUENCE', obj.schema_name);
+                END IF;
+
+                IF obj.command_tag = 'CREATE SCHEMA' THEN
+                    CALL "admin_schema".handle_grants(obj.objid, obj.object_identity, 'SCHEMA', obj.object_identity);
+                END IF;
+            END LOOP;
+    END;
+    $function$
+```
+
+And finally for all of this to actually work, we need to define the event trigger and bind it to our function, which thankfully is simple!
+
+Notice in the following snippet that we specify `ddl_command_end`, there are two main points one can hook into:
+- `ddl_command_start` - Execute (and wait for) the function **BEFORE** running the DDL itself, inspecting catalogues at this point **will not** show the change as being reflected. This is a good point to perform validation/security checks.
+- `ddl_command_end` - Execute (and wait for before committing) **AFTER** running the DDL itself, inspecting catalogues at this point **will** show the change. This is what we want as we need the object to exist to apply grants upon it.
+
+As mentioned earlier, both of these happen within the transactional boundary of the DDL event, so if the function throws (raises an exception) then the whole transaction will be rolled back.
+
+```sql
+CREATE EVENT TRIGGER role_grants_event_trigger ON ddl_command_end
+    EXECUTE FUNCTION "admin_schema".handle_role_grants_event_trigger();
 ```
 
 #### Reconciliation
@@ -150,7 +227,97 @@ A few use cases where this is needed:
 
 <br />Essentially, it's going to be important to run a full reconcile each time the spec for the Kubernetes resource changes, this catches all of the above and also will allow for applying changes to the granting logic and having it retrospectively applied. 
 
-Rather than maintaining two completely disparate procedures, one for responding to DDL events and one for reconciling exiting objects, we can create a common procedure that can be called by either. This ensures that the granting logic is the exact same no matter which code path triggers it.
+Rather than maintaining two completely disparate procedures, one for responding to DDL events and one for reconciling exiting objects, we can can utilise the slightly abstracted procedure (`admin_schema.handle_grants`) that we created above. This ensures that the granting logic is the exact same no matter which code path triggers it.
+
+This is the final function/procedure, I promise! Here's what it's doing:
+
+**Applying grants**
+1. Finding all objects by querying `pg_class`
+2. For each object, invoke (call) the `handle_grants` procedure, exactly the same as the event trigger does
+
+**Revoking old grants**
+1. Finding all privileges on objects that are in schemas that are owned by the `owner_role` (described in a section above).
+2. Loop over each of these privileges (grants)
+3. If the grant is still valid, move on, leave it alone.
+4. If the grant is no longer valid, run a `REVOKE`.
+```sql
+CREATE OR REPLACE PROCEDURE admin_schema.reconcile_role_grants()
+ LANGUAGE plpgsql
+ SET search_path TO 'admin_schema', 'pg_temp'
+AS $procedure$
+    DECLARE
+        row RECORD;
+    BEGIN
+        -- Logic for reconciling role grants
+        FOR row IN
+            SELECT oid,
+                   concat(quote_ident(relnamespace::regnamespace::text),
+                          '.',
+                          quote_ident(relname)
+                   ) AS object_identifier,
+                   relnamespace::regnamespace::text AS schema,
+                   relkind
+            FROM pg_catalog.pg_class
+        LOOP
+            -- relkind - r: Table (Relation), v: View, m: Materialized View
+            IF row.relkind IN ('r', 'v', 'm') THEN
+              CALL "admin_schema".handle_grants(row.oid, row.object_identifier, 'TABLE', row.schema);
+            END IF;
+
+            -- relkind - S: Sequence
+            IF row.relkind = 'S' THEN
+              CALL "admin_schema".handle_grants(row.oid, row.object_identifier, 'SEQUENCE', row.schema);
+            END IF;
+        END LOOP;
+
+        FOR row in (SELECT nspname AS schema FROM pg_catalog.pg_namespace)
+        LOOP
+            CALL "admin_schema".handle_grants(NULL, row.schema, 'SCHEMA', row.schema);
+        END LOOP;
+
+        -- Revoke grants that are no longer valid
+        FOR row IN
+          SELECT *
+          FROM (
+            SELECT relnamespace::regnamespace::text AS schema,
+                   relname AS object_name,
+                   (CASE
+                      WHEN relkind = 'r' THEN 'TABLE'
+                      WHEN relkind = 'v' THEN 'TABLE'
+                      WHEN relkind = 'm' THEN 'TABLE'
+                      WHEN relkind = 'S' THEN 'SEQUENCE'
+                    END) AS object_type,
+                   (aclexplode(relacl)).grantee::regrole::text AS grantee,
+                   (aclexplode(relacl)).privilege_type::text AS privilege
+            FROM pg_class
+            WHERE relacl is NOT NULL AND relkind IN ('r', 'v', 'm', 'S')
+          ) privileges
+          WHERE EXISTS (SELECT nspname
+                        FROM pg_catalog.pg_namespace
+                        WHERE nspname = schema
+                        AND nspowner::regrole::text = 'owner_role')
+        LOOP
+
+          IF row.object_type = 'TABLE' AND row.schema = 'financial_reporting' AND row.object_name = 'outbox' AND row.grantee = 'kafka_connect' AND row.privilege = 'SELECT' THEN
+            CONTINUE;
+          END IF;
+
+          EXECUTE format('REVOKE %s ON %s FROM %s;',
+                          row.privilege,
+                          concat(quote_ident(row.schema), '.', quote_ident(row.object_name)),
+                          quote_ident(row.grantee));
+        END LOOP;
+    END;
+    $procedure$
+```
 
 ### Conclusion
-Summarise, wrap up, the end etc
+The functions and procedures that have been shown in this post are very much a MVP of what actually gets applied to the databases that are being managed by this mechanism, but hopefully this has shown how it all fits together and provided a base for anyone wishing to do similar.
+
+As mentioned earlier in the post, we have an opinionated way that our databases should broadly look and therefore are able to do things like scope to things owned by the 'owner role', not everyone will be in this position.
+
+It'd be interesting to hear any thoughts on what we are doing here and how others have solved similar issues, especially when trying to fully automate database provisioning and management. 
+
+Further reading:
+- The [official Postgres documentation on event triggers](https://www.postgresql.org/docs/current/functions-event-triggers.html), that is both useful and also infuriatingly vague in parts.
+- An [interesting and informative post](https://www.cybertec-postgresql.com/en/abusing-security-definer-functions/) by Laurenz Albe on how `SECURITY DEFINER` functions can be abused and the steps to take to secure them. Some of which you will see reflected in the above examples (e.g. setting the `search_path`).

@@ -298,7 +298,7 @@ AS $procedure$
                         AND nspowner::regrole::text = 'owner_role')
         LOOP
 
-          IF row.object_type = 'TABLE' AND row.schema = 'financial_reporting' AND row.object_name = 'outbox' AND row.grantee = 'kafka_connect' AND row.privilege = 'SELECT' THEN
+          IF row.object_type = 'TABLE' AND row.schema = 'financial_reporting' AND row.object_name = 'outbox' AND row.grantee = 'kafka-connect' AND row.privilege = 'SELECT' THEN
             CONTINUE;
           END IF;
 

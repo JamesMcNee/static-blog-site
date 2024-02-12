@@ -1,3 +1,20 @@
+---
+layout: layouts/post.njk
+title: 'Managing permissions with Postgres event triggers'
+synopsis: How event triggers can be used to provide a flexible mechanism for permissions management at scale.
+image:
+path: blog/posts/blog14.webp
+alt: Photo depicting an elephant squirting water from its trunk.
+caption: Photo by <a href="https://unsplash.com/@geraninmo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Geranimo</a> on <a href="https://unsplash.com/photos/brown-elephant-standing-on-brown-field-during-daytime-AX9sJ-mPoL4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+labels:
+- Postgres
+- Event Triggers
+- Kubernetes
+- Self Service
+- CloudSQL
+date: 2024-02-10
+draft: true
+---
 ### Setting the scene
 We (Auto Trader UK, where I work in the infrastructure team) use [GKE (Google Kubernetes Engine)](https://cloud.google.com/kubernetes-engine) to run our application workloads. We use [Google's CloudSQL offering](https://cloud.google.com/sql) to provide developers with relational data stores, such as MySQL and Postgres for their applications to integrate with.
 

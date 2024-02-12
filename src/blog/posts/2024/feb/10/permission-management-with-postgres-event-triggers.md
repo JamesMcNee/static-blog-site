@@ -1,20 +1,3 @@
----
-layout: layouts/post.njk
-title: 'Managing permissions with Postgres event triggers'
-synopsis: How event triggers can be used to provide a flexible mechanism for permissions management at scale.
-image: 
-  path: blog/posts/blog14.webp
-  alt: Photo depicting an elephant squirting water from its trunk.
-  caption: Photo by <a href="https://unsplash.com/@geraninmo?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Geranimo</a> on <a href="https://unsplash.com/photos/brown-elephant-standing-on-brown-field-during-daytime-AX9sJ-mPoL4?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-labels:
-  - Postgres
-  - Event Triggers
-  - Kubernetes
-  - Self Service
-  - CloudSQL
-date: 2024-02-10
-draft: true
----
 ### Setting the scene
 We (Auto Trader UK, where I work in the infrastructure team) use [GKE (Google Kubernetes Engine)](https://cloud.google.com/kubernetes-engine) to run our application workloads. We use [Google's CloudSQL offering](https://cloud.google.com/sql) to provide developers with relational data stores, such as MySQL and Postgres for their applications to integrate with.
 
@@ -112,19 +95,19 @@ Adding documentation for quirks and calling it a day is a last resort option rea
 There are a few issues with this one, but the main one is that unless the spec of the resource changes the controller will not run. Therefore, if the above scenario plays out as described, the grant will not be applied and then will also not try again until another unrelated change to the resource spec is made.
 
 ### Event Triggers to the rescue
-So how can you grant permissions on an object that doesn't (yet) exits? Well, as far as I know, you cannot. But all hope is not lost, because what if we can somehow hook into the lifecycle (create, update, delete) of objects in the database and run our grants at this point in time? Luckily Postgres has a mechanism for this, [Event Triggers](https://www.postgresql.org/docs/current/event-trigger-definition.html).
+So how can you grant permissions on an object that doesn't (yet) exist? Well, as far as I know, you cannot. But all hope is not lost, because what if we can somehow hook into the lifecycle (create, update, delete) of objects in the database and run our grants at this point? Luckily Postgres has a mechanism for this, [Event Triggers](https://www.postgresql.org/docs/current/event-trigger-definition.html).
 
 <div class="md:ml-6 bg-base-300 md:bg-transparent">
 
 #### What is an event trigger?
-Triggers have long existed on relational databases as a way to hook into DML (Data Manipulation Language) actions such as `INSERT` and `DELETE` on rows in tables for example, however standard triggers are not able to observe DDL (Data Definition Language) events such as `CREATE` and `DROP`. Postgres' Event Trigger mechanism though is built to facilitate this and allows for the execution of code at either the beginning or end of one of these commands. A function that hooks into these events is able to observe and even reject the action, making them a powerful tool for restricting actions.
+Triggers have long existed on relational databases as a way to hook into DML (Data Manipulation Language) actions such as `INSERT` and `DELETE` on rows in tables for example, however, standard triggers are not able to observe DDL (Data Definition Language) events such as `CREATE` and `DROP`. Postgres' Event Trigger mechanism though is built to facilitate this and allows for the execution of code at either the beginning or end of one of these commands. A function that hooks into these events can observe and even reject the action, making them a powerful tool for restricting actions.
 
 The most common use case for event triggers seems to be for centralised auditing of DDL tracking when, and by whom was a table, view, sequence, etc) created, dropped or modified. Another use case discussed online in various places is around restricting the types of objects that can be created, for example blocking the creation of functions, materialised views etc.
 
 The event trigger function, whether it is invoked at the start or end of the DDL command, is fully involved in the transaction. This means that if an exception is raised at any point, the whole transaction will be aborted and rolled back if required.
 </div>
 
-Hopefully it's becoming clear how we can leverage this in order to achieve the functionality we desire, granting permissions across the board not only on objects that currently exist, but also ones that do not yet. To quote a popular maxim, it allows us to "kill two birds with one stone" (only metaphorical birds were harmed, don't worry!).
+Hopefully, it's becoming clear how we can leverage this to achieve the functionality we desire, granting permissions across the board not only on objects that currently exist but also on ones that do not yet. To quote a popular maxim, it allows us to "kill two birds with one stone" (only metaphorical birds were harmed, don't worry!).
 
 #### Defining the event trigger and function
 <custom-element>
@@ -133,12 +116,12 @@ Hopefully it's becoming clear how we can leverage this in order to achieve the f
   </banner>
 </custom-element>
 
-Without further ado, lets have a look at an event trigger based, on the configuration example above:
+Without further ado, let's have a look at an event trigger based, on the configuration example above:
 
-First we will define a procedure (a function that doesn't return a value) that will contain all our granting logic, it will take the following arguments:
+First, we will define a procedure (a function that doesn't return a value) that will contain all our granting logic, it will take the following arguments:
 - `object_id`: The oid of the object that is currently being handled.
-- `object_identity`: The identity (schema qualified name) of the object.
-- `object_type`: An enumerable mapping for the type the object is `RELATION` (Table, View), `SEQUENCE` etc.
+- `object_identity`: The identity (schema-qualified name) of the object.
+- `object_type`: An enumerable mapping for the type of the object is `RELATION` (Table, View), `SEQUENCE` etc.
 - `schema_name`: The name of the schema to which the object belongs.
 
 We will then template our function with the logic that checks if the current object is one we are interested in and if so, applies the grants.
@@ -166,11 +149,11 @@ AS $procedure$
     $procedure$
 ```
 
-The next thing we need is a function that the event trigger will invoke directly, the shape of this function is rigid in that it must return an `event_trigger` type and also has access to retrieve data about the current invocation of the trigger. The above function could totally be folded into this, however to foreshadow slightly, it will be useful to have separate later... 
+The next thing we need is a function that the event trigger will invoke directly, the shape of this function is rigid in that it must return an `event_trigger` type and also has access to retrieve data about the current invocation of the trigger. The above function could be folded into this, however, to foreshadow slightly, it will be useful to have it separate later...
 
 There are a few interesting things about this function:
-- It uses `SECURITY DEFINER` - When a function is invoked in SQL, usually it will be done so acting as the `CURRENT_USER` i.e. the current role that is set for the session. However, it's often necessary to use a function to allow a user to perform elevated actions they could not otherwise perform, without giving them too much power. By creating a function as `SECURITY DEFINER` it means that the function should be executed as the role that owns it, rather than the invokers role.
-- It calls a mystery `pg_event_trigger_ddl_commands()` function and loops through the returned rows. This function returns the 'DDL commands' that caused the event trigger to fire, usually this will only contain a single row, but certain statements can result in multiple.
+- It uses `SECURITY DEFINER` - When a function is invoked in SQL, usually it will be done so acting as the `CURRENT_USER` i.e. the current role that is set for the session. However, it's often necessary to use a function to allow a user to perform elevated actions they could not otherwise perform, without giving them too much power. By creating a function as `SECURITY DEFINER` it means that the function should be executed as the role that owns it, rather than the invoker's role.
+- It calls a mystery `pg_event_trigger_ddl_commands()` function and loops through the returned rows. This function returns the 'DDL commands' that caused the event trigger to fire, usually, this will only contain a single row, but certain statements can result in multiple.
 
 <br/> Hopefully the rest is fairly self-explanatory, we loop through all the DDL commands that have happened in the current invocation and call our grant procedure after grouping the DDL commands by their target. I.e. tables, views and materialized views should all be treated as `RELATION`s.
 
@@ -203,7 +186,7 @@ AS $function$
     $function$
 ```
 
-And finally for all of this to actually work, we need to define the event trigger and bind it to our function, which thankfully is simple!
+And finally for all of this to work, we need to define the event trigger and bind it to our function, which thankfully is simple!
 
 Notice in the following snippet that we specify `ddl_command_end`, there are two main points one can hook into:
 - `ddl_command_start` - Execute (and wait for) the function **BEFORE** running the DDL itself, inspecting catalogues at this point **will not** show the change as being reflected. This is a good point to perform validation/security checks.
@@ -217,7 +200,7 @@ CREATE EVENT TRIGGER role_grants_event_trigger ON ddl_command_end
 ```
 
 #### Reconciliation
-The above section describes how we can set up an event trigger to respond to new objects being created on the database and dynamically grant the appropriate permissions to roles that should have access, however it's important to also be able to 'reconcile' existing objects on the database and have permissions applied retrospectively. 
+The above section describes how we can set up an event trigger to respond to new objects being created on the database and dynamically grant the appropriate permissions to roles that should have access, however, it's important to also be able to 'reconcile' existing objects on the database and have permissions applied retrospectively.
 
 A few use cases where this is needed:
 - The first time the event trigger is added to an existing database.
@@ -225,9 +208,9 @@ A few use cases where this is needed:
 - Each time the access list is altered either allowing more roles access to an object or changing the permissions an existing one has.
 - In the event that something unexpected happened and the grants were not applied.
 
-<br />Essentially, it's going to be important to run a full reconcile each time the spec for the Kubernetes resource changes, this catches all of the above and also will allow for applying changes to the granting logic and having it retrospectively applied. 
+<br />Essentially, it's going to be important to run a full reconcile each time the spec for the Kubernetes resource changes, this catches all of the above and also will allow for applying changes to the granting logic and having it retrospectively applied.
 
-Rather than maintaining two completely disparate procedures, one for responding to DDL events and one for reconciling exiting objects, we can can utilise the slightly abstracted procedure (`admin_schema.handle_grants`) that we created above. This ensures that the granting logic is the exact same no matter which code path triggers it.
+Rather than maintaining two completely disparate procedures, one for responding to DDL events and one for reconciling existing objects, we can utilise the slightly abstracted procedure (`admin_schema.handle_grants`) that we created above. This ensures that the granting logic is the same no matter which code path triggers it.
 
 This is the final function/procedure, I promise! Here's what it's doing:
 
@@ -238,7 +221,7 @@ This is the final function/procedure, I promise! Here's what it's doing:
 **Revoking old grants**
 1. Finding all privileges on objects that are in schemas that are owned by the `owner_role` (described in a section above).
 2. Loop over each of these privileges (grants)
-3. If the grant is still valid, move on, leave it alone.
+3. If the grant is still valid, move on, and leave it alone.
 4. If the grant is no longer valid, run a `REVOKE`.
 ```sql
 CREATE OR REPLACE PROCEDURE admin_schema.reconcile_role_grants()
@@ -312,12 +295,12 @@ AS $procedure$
 ```
 
 ### Conclusion
-The functions and procedures that have been shown in this post are very much a MVP of what actually gets applied to the databases that are being managed by this mechanism, but hopefully this has shown how it all fits together and provided a base for anyone wishing to do similar.
+The functions and procedures that have been shown in this post are very much an MVP of what gets applied to the databases that are being managed by this mechanism, but hopefully, this has shown how it all fits together and provided a base for anyone wishing to do similar.
 
-As mentioned earlier in the post, we have an opinionated way that our databases should broadly look and therefore are able to do things like scope to things owned by the 'owner role', not everyone will be in this position.
+As mentioned earlier in the post, we have an opinionated way that our databases should broadly look and therefore can do things like scope to things owned by the 'owner role', not everyone will be in this position.
 
-It'd be interesting to hear any thoughts on what we are doing here and how others have solved similar issues, especially when trying to fully automate database provisioning and management. 
+It'd be interesting to hear any thoughts on what we are doing here and how others have solved similar issues, especially when trying to fully automate database provisioning and management.
 
 Further reading:
-- The [official Postgres documentation on event triggers](https://www.postgresql.org/docs/current/functions-event-triggers.html), that is both useful and also infuriatingly vague in parts.
+- The [official Postgres documentation on event triggers](https://www.postgresql.org/docs/current/functions-event-triggers.html), is both useful and also infuriatingly vague in parts.
 - An [interesting and informative post](https://www.cybertec-postgresql.com/en/abusing-security-definer-functions/) by Laurenz Albe on how `SECURITY DEFINER` functions can be abused and the steps to take to secure them. Some of which you will see reflected in the above examples (e.g. setting the `search_path`).

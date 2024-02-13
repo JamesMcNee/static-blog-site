@@ -12,8 +12,7 @@ labels:
     - Kubernetes
     - Self Service
     - CloudSQL
-date: 2024-02-10
-draft: true
+date: 2024-02-13
 ---
 ### Setting the scene
 We (Auto Trader UK, where I work in the infrastructure team) use [GKE (Google Kubernetes Engine)](https://cloud.google.com/kubernetes-engine) to run our application workloads. We use [Google's CloudSQL offering](https://cloud.google.com/sql) to provide developers with relational data stores, such as MySQL and Postgres for their applications to integrate with.

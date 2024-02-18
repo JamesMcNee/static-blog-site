@@ -1,6 +1,11 @@
 ---
 layout: layouts/base.njk
 ---
+{% if draft %}
+<div class="bg-warning text-black text-center py-1 font-bold">
+This post is a draft; it has not been published!
+</div>
+{% endif %}
 <progress class="progress progress-secondary scroll-progress w-[102%] left-[-1%] fixed bg-transparent z-50 top-0" value="0" max="100"></progress>
 <script type="text/javascript" defer src="/scripts/scroll-progress.js"></script>
 <div class="lg:mx-28 xl:mx-48 2xl:mx-64 p-2 md:p-12">

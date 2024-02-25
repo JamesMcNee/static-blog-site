@@ -1,4 +1,4 @@
-{% for post in postslist | shouldDisplayPost | reverse %}
+{% for post in postslist | shouldDisplayItem | reverse %}
     <div class="card md:card-side bg-base-100 shadow-xl my-2">
         <figure class="md:w-[40%] md:min-w-[40%] md:max-w-[40%]">
             <img src="/img/{{ post.data.image.path }}" alt="{{ posts.data.image.alt }}" class="rounded-xl h-full" {% if loop.first %}fetchpriority="high"{% elseif loop.index0 > 1 %}loading="lazy"{% endif %}/>

@@ -1,0 +1,43 @@
+---json
+{
+    "permalink": "scratches/feed.json",
+    "eleventyExcludeFromCollections": true,
+    "metadata": {
+        "title": "James McNee - Scratches",
+        "subtitle": "Small posts and thoughts, code snippets and other bits, not deemed worth a full post ..",
+        "language": "en",
+        "url": "https://www.jamesmcnee.com/",
+        "author": {
+            "name": "James McNee",
+            "email": "james@jamesmcnee.co.uk"
+        }
+    }
+}
+---
+{
+    "version": "https://jsonfeed.org/version/1.1",
+    "title": "{{ metadata.title }}",
+    "language": "{{ metadata.language }}",
+    "home_page_url": "{{ metadata.url }}",
+    "feed_url": "{{ permalink | absoluteUrl(metadata.url) }}",
+    "description": "{{ metadata.subtitle }}",
+    "author": {
+        "name": "{{ metadata.author.name }}",
+        "email": "{{ metadata.author.email }}"
+    },
+    "items": [
+        {%- for scratch in collections.visibleScratches | reverse %}
+        {%- set absolutePostUrl = scratch.url | absoluteUrl(metadata.url) %}
+        {
+            "id": "{{ absolutePostUrl }}",
+            "url": "{{ absolutePostUrl }}",
+            "path": "{{ scratch.url }}",
+            "title": "{{ scratch.data.title }}",
+            "synopsis": "{{ scratch.data.synopsis }}",
+            "content_html": {% if scratch.templateContent %}{{ scratch.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | dump | safe }}{% else %}""{% endif %},
+            "date_published": "{{ scratch.date | dateToRfc3339 }}"
+        }
+        {% if not loop.last %},{% endif %}
+        {%- endfor %}
+    ]
+}

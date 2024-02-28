@@ -74,7 +74,7 @@ permalink: "{% if pagination.pageNumber == 0 %}/scratches/index.html{% elif pagi
             </div>
         </div>
     </div>
-    <div class="grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2%">
+    <div class="grid grid-cols-2 gap-4">
     {% for scratch in (pagination.items | reverse) | shouldDisplayItem | reverse %}
         <div class="card md:card-side bg-base-100 shadow-xl my-2">
             <div class="card-body">

@@ -10,8 +10,7 @@ date: 2024-02-28
 
 A guard and its usage usually looks like the following:
 ```typescript
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { Controller, Get } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UseGuards, Controller, Post} from '@nestjs/common';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
@@ -46,7 +45,7 @@ Unfortunately, NestJS does not provide an out-of-the-box mechanism to define a c
 We can build this ourselves though, let's take a look:
 ```typescript
 import type { CanActivate, ExecutionContext, Type } from '@nestjs/common'
-import { applyDecorators, Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { ModuleRef, Reflector } from '@nestjs/core'
 
 /**
@@ -104,7 +103,9 @@ The former of these is what makes this mechanism extremely useful as users of th
 
 In terms of using this new composite guard, let's take a look at the example from before:
 ```typescript
-import { MatchAny, MatchAnyGuard } from './guards'
+import { UseGuards, Controller, Post } from '@nestjs/common'
+import { MatchAny, MatchAnyGuard, AdminGuard, SuperAdminGuard } from './guards'
+
 
 @UseGuards(MatchAny)
 @Controller('admin')
@@ -145,6 +146,8 @@ Now, any route that is decorated with `MatchAnyGuard(...)` will work without the
 Nest provide a function that allows you to create a decorator that applies multiple other decorators when used, so we could for example use this to create a higher order decorator.
 
 ```typescript
+import { applyDecorators, CanActivate, Type, UseGuards } from '@nestjs/common'
+
 export function MatchAnyGuard(
     ...guards: (CanActivate | Type<CanActivate>)[]
 ): MethodDecorator {

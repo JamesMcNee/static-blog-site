@@ -120,7 +120,7 @@ module.exports = function (eleventyConfig) {
                 'connect-src': `${defaultSrc}`,
                 'font-src': `${defaultSrc}`,
                 'style-src': `${defaultSrc} ${allowedStyleDomains.join(' ')}`,
-                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
+                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
                 'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
                 'frame-src': `${defaultSrc} https://giscus.app`,
                 'frame-ancestors': `'none'`,

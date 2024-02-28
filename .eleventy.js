@@ -108,7 +108,8 @@ module.exports = function (eleventyConfig) {
         ]
 
         const allowedInlineScriptHashes = [
-            'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=' // The post search script on index
+            'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=', // The post search script on index
+            'sha256-mQqrUAFmGHbDEwXxnErp1dtOZ/fK/qAnK9BIXvwP/Cc=' // The scratch search script
         ]
 
         return cspBuilder({

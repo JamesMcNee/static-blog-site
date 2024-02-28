@@ -59,8 +59,8 @@ permalink: "{% if pagination.pageNumber == 0 %}/labs/index.html{% elif paginatio
         resultsDiv.innerHTML = compiledString
     })
 </script>
-<div class="lg:mx-24 xl:mx-48 2xl:mx-64 p-6 md:px-12 h-full">
-    <div class="flex">
+<div class="lg:mx-24 xl:mx-48 2xl:mx-64 p-6 md:px-12 min-h-screen">
+    <div class="md:flex">
         <div class="md:flex-1 px-4 pt-2">
             <p>
                 <i class="ri-lightbulb-line"></i> These are labs, they are not full posts and are more akin to a Github gist. The idea is to share thoughts and snippets of code, that might not be quite as refined.
@@ -78,7 +78,7 @@ permalink: "{% if pagination.pageNumber == 0 %}/labs/index.html{% elif paginatio
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     {% for lab in (pagination.items | reverse) | shouldDisplayItem | reverse %}
         <div class="card md:card-side bg-base-100 shadow-xl my-2">
             <div class="card-body">

@@ -26,7 +26,7 @@ The benefits that a static site provides in terms of web performance and the eas
 
 So, like any good developer, I immediately went to Google in hopes of finding someone who has already done the work for me! Alas, my search did not yield a good example of how to implement what I wanted.
 
-#### Building it from scratch
+#### Building it from lab
 After not having found a good example (there may be good examples, I just did not find one), I set in thinking about how I could implement it myself.
 
 The back of the napkin requirements were simple, the solution should:

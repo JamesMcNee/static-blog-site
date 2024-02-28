@@ -1,11 +1,11 @@
 ---
-title: Scratches
+title: Labs
 layout: layouts/base.njk
 pagination:
-    data: collections.visibleScratches
+    data: collections.visibleLabs
     size: 4
     reverse: true
-permalink: "{% if pagination.pageNumber == 0 %}/scratches/index.html{% elif pagination.pageNumber > 0 %}scratches/page-{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
+permalink: "{% if pagination.pageNumber == 0 %}/labs/index.html{% elif pagination.pageNumber > 0 %}labs/page-{{ pagination.pageNumber + 1 }}/index.html{% endif %}"
 
 ---
 
@@ -32,7 +32,7 @@ permalink: "{% if pagination.pageNumber == 0 %}/scratches/index.html{% elif pagi
 
         searchShouldBeVisible(true)
 
-        const feedResponse = await fetch('/scratches/feed.json')
+        const feedResponse = await fetch('/labs/feed.json')
         const feed = await feedResponse.json()
 
         const filtered = feed.items.filter(item => `${item.title}${item.synopsis}`.toLowerCase().includes(term.toLowerCase()))
@@ -63,13 +63,13 @@ permalink: "{% if pagination.pageNumber == 0 %}/scratches/index.html{% elif pagi
     <div class="flex">
         <div class="md:flex-1 px-4 pt-2">
             <p>
-                <i class="ri-lightbulb-line"></i> These are scratches, they are not full posts and are more akin to a Github gist. The idea is to share thoughts and snippets of code, that might not be quite as refined.
+                <i class="ri-lightbulb-line"></i> These are labs, they are not full posts and are more akin to a Github gist. The idea is to share thoughts and snippets of code, that might not be quite as refined.
             </p>
         </div>
         <div class="flex-1 md:flex-none">
             <div class="form-control w-full md:max-w-xs">
                 <label class="label" for="post-search">
-                    <span class="label-text">Search Scratches:</span>
+                    <span class="label-text">Search Labs:</span>
                 </label>
                 <input id="post-search" autocomplete="off" type="search" placeholder="Type here" class="input input-bordered w-full md:max-w-xs" />
             </div>
@@ -79,15 +79,15 @@ permalink: "{% if pagination.pageNumber == 0 %}/scratches/index.html{% elif pagi
         </div>
     </div>
     <div class="grid grid-cols-2 gap-4">
-    {% for scratch in (pagination.items | reverse) | shouldDisplayItem | reverse %}
+    {% for lab in (pagination.items | reverse) | shouldDisplayItem | reverse %}
         <div class="card md:card-side bg-base-100 shadow-xl my-2">
             <div class="card-body">
                 <h2 class="card-title">
-                    <a href="{{ scratch.url | url }}" class="text-secondary">{{ scratch.data.title }}</a>
+                    <a href="{{ lab.url | url }}" class="text-secondary">{{ lab.data.title }}</a>
                 </h2>
-                <p>{{ scratch.data.synopsis }}</p>
+                <p>{{ lab.data.synopsis }}</p>
                 <div class="card-actions justify-end">
-                    <a href="{{ scratch.url | url }}">
+                    <a href="{{ lab.url | url }}">
                         <button class="btn btn-neutral">Read it!</button>
                     </a>
                 </div>

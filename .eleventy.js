@@ -109,7 +109,7 @@ module.exports = function (eleventyConfig) {
 
         const allowedInlineScriptHashes = [
             'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=', // The post search script on index
-            'sha256-mQqrUAFmGHbDEwXxnErp1dtOZ/fK/qAnK9BIXvwP/Cc=' // The scratch search script
+            'sha256-vUQEo1OmhinjY+7gfAiahkgCt/1E1smts+xQjZVgY6Q=' // The scratch search script
         ]
 
         return cspBuilder({
@@ -120,7 +120,7 @@ module.exports = function (eleventyConfig) {
                 'connect-src': `${defaultSrc}`,
                 'font-src': `${defaultSrc}`,
                 'style-src': `${defaultSrc} ${allowedStyleDomains.join(' ')}`,
-                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
+                'script-src': `${defaultSrc} ${allowedInlineScriptHashes.length > 0 ? `'unsafe-inline'` : ''} ${allowedInlineScriptHashes.map(hash => `'${hash}'`).join(' ')} ${allowedScriptDomains.join(' ')}`,
                 'script-src-attr': `'unsafe-hashes' 'sha256-1jAmyYXcRq6zFldLe/GCgIDJBiOONdXjTLgEFMDnDSM='`, // This is to allow the preloading of stylesheets
                 'frame-src': `${defaultSrc} https://giscus.app`,
                 'frame-ancestors': `'none'`,

@@ -1,9 +1,9 @@
 ---json
 {
-    "permalink": "scratches/feed.json",
+    "permalink": "labs/feed.json",
     "eleventyExcludeFromCollections": true,
     "metadata": {
-        "title": "James McNee - Scratches",
+        "title": "James McNee - Labs",
         "subtitle": "Small posts and thoughts, code snippets and other bits, not deemed worth a full post ..",
         "language": "en",
         "url": "https://www.jamesmcnee.com/",
@@ -26,16 +26,16 @@
         "email": "{{ metadata.author.email }}"
     },
     "items": [
-        {%- for scratch in collections.visibleScratches | reverse %}
-        {%- set absolutePostUrl = scratch.url | absoluteUrl(metadata.url) %}
+        {%- for lab in collections.visibleLabs | reverse %}
+        {%- set absolutePostUrl = lab.url | absoluteUrl(metadata.url) %}
         {
             "id": "{{ absolutePostUrl }}",
             "url": "{{ absolutePostUrl }}",
-            "path": "{{ scratch.url }}",
-            "title": "{{ scratch.data.title }}",
-            "synopsis": "{{ scratch.data.synopsis }}",
-            "content_html": {% if scratch.templateContent %}{{ scratch.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | dump | safe }}{% else %}""{% endif %},
-            "date_published": "{{ scratch.date | dateToRfc3339 }}"
+            "path": "{{ lab.url }}",
+            "title": "{{ lab.data.title }}",
+            "synopsis": "{{ lab.data.synopsis }}",
+            "content_html": {% if lab.templateContent %}{{ lab.templateContent | htmlToAbsoluteUrls(absolutePostUrl) | dump | safe }}{% else %}""{% endif %},
+            "date_published": "{{ lab.date | dateToRfc3339 }}"
         }
         {% if not loop.last %},{% endif %}
         {%- endfor %}

@@ -59,10 +59,10 @@ module.exports = function (eleventyConfig) {
         return allPosts.filter(shouldDisplayItem)
     })
 
-    eleventyConfig.addCollection('visibleScratches', (collectionApi) => {
-        const allScratches = collectionApi.getFilteredByTag("scratches")
+    eleventyConfig.addCollection('visibleLabs', (collectionApi) => {
+        const allLabs = collectionApi.getFilteredByTag("labs")
 
-        return allScratches.filter(shouldDisplayItem)
+        return allLabs.filter(shouldDisplayItem)
     })
 
     eleventyConfig.addCollection("postTags", function (collectionApi) {
@@ -109,7 +109,7 @@ module.exports = function (eleventyConfig) {
 
         const allowedInlineScriptHashes = [
             'sha256-smKXypSFxzKD9ffC0rSshp292sAzf/X7cquCvQEA8XA=', // The post search script on index
-            'sha256-vUQEo1OmhinjY+7gfAiahkgCt/1E1smts+xQjZVgY6Q=' // The scratch search script
+            'sha256-vUQEo1OmhinjY+7gfAiahkgCt/1E1smts+xQjZVgY6Q=' // The lab search script
         ]
 
         return cspBuilder({

@@ -1,5 +1,5 @@
 ---
-layout: layouts/scratch.njk
+layout: layouts/lab.njk
 title: 'Another article!'
 synopsis: Some other article...
 draft: true

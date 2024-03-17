@@ -23,7 +23,7 @@ ul,ol li {
 }
 
 a {
-    @apply text-sky-700 font-semibold
+    @apply text-secondary font-semibold
 }
 
 h1 {

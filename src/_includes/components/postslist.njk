@@ -1,5 +1,5 @@
 {% for post in postslist | shouldDisplayItem | reverse %}
-    <div class="card md:card-side bg-base-100 shadow-xl my-2">
+    <div class="card md:card-side bg-base-100 shadow-xl my-2 {% if post.data.draft %}opacity-50{% endif %}">
         <figure class="md:w-[40%] md:min-w-[40%] md:max-w-[40%]">
             <img src="/img/{{ post.data.image.path }}" alt="{{ posts.data.image.alt }}" class="rounded-xl h-full" {% if loop.first %}fetchpriority="high"{% elseif loop.index0 > 1 %}loading="lazy"{% endif %}/>
         </figure>
@@ -24,6 +24,11 @@
                     <button class="btn btn-neutral">Read it!</button>
                 </a>
             </div>
+            {% if post.data.draft %}
+            <div class="absolute bottom-0 left-0 w-full bg-warning text-black text-center font-bold">
+                DRAFT
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endfor %}

@@ -21,7 +21,26 @@
     <script type="text/javascript" src="/scripts/utilities.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="{% if synopsis %}{{ synopsis }}{% else %}{{ title }}{% endif %}">
+
+    <meta property="og:title" content="{{ title }}" />
+
+    {% if layout == "layouts/post.njk" %}
+    <meta property="article:author" content="James McNee">
+    <meta property="og:type" content="article">
+
+    {% for tag in labels %}
+    <meta property="article:tag" content="{{ tag }}">
+    {% endfor %}
+    {% if synopsis %}
+    <meta name="description" content="{{ synopsis }}">
+    <meta name="og:description" content="{{ synopsis }}">
+    {% endif %}
+
+    {% if image.path %}
+    <meta property="og:image" content="https://jamesmcnee.com/img/{{ image.path }}" />
+    <meta property="og:image:alt" content="image.alt" />
+    {% endif %}
+    {% endif %}
 </head>
 <body class="h-full flex flex-col">
 {% include "../components/navigation.njk" %}

@@ -50,6 +50,10 @@ blockquote {
     @apply relative border-s-4 ps-4 ml-4
 }
 
+table {
+    @apply table
+}
+
 /** START: Custom Element **/
 custom-element banner {
     @apply shadow-2xl;

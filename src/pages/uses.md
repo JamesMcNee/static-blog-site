@@ -44,7 +44,7 @@ Here is a list of the software that I use
 Here is a list of the hardware that I use
 
 - **[Apple Macbook Air (2023)](https://www.apple.com/uk/newsroom/2023/06/apple-introduces-the-15-inch-macbook-air/)** which is so light, yet incredibly powerful, it's awesome. <i class="ri-apple-fill"></i>
-- **[Google Pixel 7](https://www.gsmarena.com/google_pixel_7-11903.php)** for that clean stock Android and ace Google features.
+- **[iPhone 15](https://www.gsmarena.com/apple_iphone_15-12559.php)** as I went over to the dark side.
 - **[WD PR2100 NAS](https://www.westerndigital.com/en-gb/products/network-attached-storage/wd-my-cloud-pro-series-pr2100?sku=WDBBCL0000NBK-EESN)** mainly as a Plex media server and Time-machine drive.
 - **[Logitech MX Master 3](https://www.theverge.com/23142689/logitech-mx-master-3s-mouse-review)** for clicking things and scrolling at the speed of light. <i class="ri-mouse-fill"></i>
 

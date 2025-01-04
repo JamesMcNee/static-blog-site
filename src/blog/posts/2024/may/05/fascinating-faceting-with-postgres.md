@@ -1,7 +1,7 @@
 ---
 layout: layouts/post.njk
 title: 'Fascinating Faceting with Postgres'
-synopsis: How event triggers can be used to provide a flexible mechanism for permissions management at scale.
+synopsis: 'Faceting is a powerful way to allow users to filter results in a search engine. In this post, we explore how to implement a basic faceting query in Postgres.'
 image:
     path: blog/posts/blog15.webp
     alt: Photo of a fruit stand containing various fruit of varying colour.
